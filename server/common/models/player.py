@@ -4,7 +4,8 @@ from common.models import Base
 
 class Player(Base):
     # generic attributes
-    name = models.CharField(max_length=128)
+    first_name = models.CharField(max_length=64)
+    last_name = models.CharField(max_length=64)
 
     # offensive attributes
     passing = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(3)])
