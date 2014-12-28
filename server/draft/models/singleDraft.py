@@ -30,7 +30,8 @@ class Draftee(Base):
     number = models.PositiveSmallIntegerField()
 
     class Meta:
-        unique_together = ('draft', 'player', 'type')
+        unique_together = (('draft', 'player', 'type'), ('draft', 'number'))
+        ordering = ['number']
 
 
 class Draft(Base):
