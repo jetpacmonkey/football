@@ -42,9 +42,42 @@ class Draft(Base):
     TYPE_CHOICES = (
         (TYPE_2WAY, '2-way players'),
         (TYPE_1WAY, '1-way players'),
-        (TYPE_CLONE, 'Cloned 1-way players')
+        (TYPE_CLONE, 'Cloned 1-way players'),  # offense and defensive versions of the same player can be taken
     )
     name = models.CharField(max_length=128)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)
     drafters = models.ManyToManyField(User, through=Drafter)
     draftees = models.ManyToManyField(Player, through=Draftee)
+
+    def addDrafter(self, user):
+        drafter = Drafter()
+        drafter.draft = self
+        drafter.user = user
+        drafter.position = self.drafters.reverse()[0].position + 1
+        self.drafters.add(drafter)
+
+    def getAvailablePlayers(self, type=None):
+        all = Player.objects.all()
+        if self.type in (TYPE_1WAY, TYPE_2WAY):
+            all = all.exclude(id__in=self.draftees())
+        elif self.type == TYPE_CLONE:
+            if type:
+                all = all.exclude(
+                    id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE),
+                    id__in=self.draftees.filter(type=Draftee.TYPE_DEFENSE))
+            else:
+                all = all.exclude(id__in=self.draftees.filter(type))
+        return all
+
+
+    def currentDrafter(self):
+        return self.drafters.all()[0].user
+
+    def draftPlayer(self, player, type=None):
+        if not self.getAvailablePlayers(type).filter(id=player.id).exists():
+            raise "Player can't be drafted"
+        draftee = Draftee()
+        draftee.draft = self
+        draftee.user = self.currentDrafter()
+        draftee.player = player
+
