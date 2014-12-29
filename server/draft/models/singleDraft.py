@@ -63,8 +63,8 @@ class Draft(Base):
         elif self.type == TYPE_CLONE:
             if type:
                 all = all.exclude(
-                    id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE),
-                    id__in=self.draftees.filter(type=Draftee.TYPE_DEFENSE))
+                    id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE) |
+                        self.draftees.filter(type=Draftee.TYPE_DEFENSE))
             else:
                 all = all.exclude(id__in=self.draftees.filter(type))
         return all
