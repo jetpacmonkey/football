@@ -1,0 +1,12 @@
+#content {
+	background: url("/static/draft/img/back.jpg");
+	background-color: black;
+	background-size: cover;
+	min-height: 100%;
+}
+
+.text {
+	background: rgb(100, 100, 100);
+	background: rgba(100, 100, 100, 0.5);
+	color: white;
+}

@@ -91,6 +91,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/var/www/football-static/'
+
 try:
     from local_settings import *
 except:

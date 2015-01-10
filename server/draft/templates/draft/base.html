@@ -1,6 +1,14 @@
 {% extends "common/base.html" %}
+
+{% load staticfiles %}
+
 {% block title %}Draft{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'draft/css/draft.css' %}">
+{% endblock %}
+
 {% block body %}
-    aaa<br/>
+<div id="content">
     {% block content %}{% endblock %}
+</div>
 {% endblock %}
