@@ -1,0 +1,17 @@
+{% extends "common/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/index.css' %}">
+{% endblock %}
+
+{% block body %}
+<nav class="index-nav">
+    <ul>
+        <li><a href="{% url 'draft.views.index' %}">Draft</a></li>
+    </ul>
+</nav>
+{% endblock %}
