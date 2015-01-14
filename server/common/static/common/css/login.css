@@ -1,0 +1,87 @@
+body {
+    background-image: url('/static/common/img/login-back.jpg');
+    background-color: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center right;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@supports(display: flex) {
+    body {
+        text-align: left;
+    }
+}
+
+.login-form {
+    border-radius: 10px;
+    background-color: rgba(80, 80, 140, 0.5);
+    padding: 0;
+    color: #eee;
+    overflow: hidden;
+
+    box-shadow: 0 0 80px 10px rgb(80, 80, 140);
+
+    width: 600px;
+    max-width: 80%;
+}
+
+.login-form table {
+    color: inherit;
+    width: 100%;
+}
+
+.login-form label {
+    display: block;
+    font-weight: normal;
+    font-family: sans-serif;
+    font-size: 1.1em;
+    padding-left: 6px;
+    text-align: right;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    font-size: 0.9em;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 10px;
+    height: 40px;
+    color: #333;
+    background: white;
+
+    transition: 0.4s;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    background: rgb(100, 140, 200);
+    color: #eee;
+}
+
+.login-form .submit {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    background: rgba(40, 80, 120, 0.6);
+
+    cursor: pointer;
+
+    font-size: 1.15em;
+    color: #eee;
+}
+
+.login-form .submit:hover {
+    background: rgba(40, 80, 120, 0.8);
+}

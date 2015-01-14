@@ -1,0 +1,32 @@
+{% extends "common/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Login{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/login.css' %}">
+{% endblock %}
+
+{% block body %}
+    {% if form.errors %}
+    <p class="errors">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form class="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <th><label for="{{ form.username.id_for_label }}">Username</label></th>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <th><label for="{{ form.password.id_for_label }}">Password</label></th>
+            <td>{{ form.password }}</td>
+        </tr>
+        </table>
+
+        <input type="submit" class="submit" value="Login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+{% endblock %}
