@@ -8,5 +8,6 @@ urlpatterns = patterns('',
 
     url(r'^draft/', include('draft.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'', include('common.urls')),
 )
