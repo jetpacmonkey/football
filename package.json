@@ -2,8 +2,7 @@
   "name": "football",
   "version": "0.0.0",
   "description": "It's a game! Um... eventually...",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-bower-task": "^0.4.0"
