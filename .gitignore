@@ -3,4 +3,4 @@
 
 local_settings.py
 
-bower_components
+server/common/static/vendor
