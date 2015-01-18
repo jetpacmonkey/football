@@ -4,3 +4,4 @@
 local_settings.py
 
 server/common/static/vendor
+node_modules

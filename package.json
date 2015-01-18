@@ -1,0 +1,24 @@
+{
+  "name": "football",
+  "version": "0.0.0",
+  "description": "It's a game! Um... eventually...",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bower-task": "^0.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jetpacmonkey/football.git"
+  },
+  "author": "Jeremy Tice <jeremy@jeremytice.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jetpacmonkey/football/issues"
+  },
+  "homepage": "https://github.com/jetpacmonkey/football"
+}
