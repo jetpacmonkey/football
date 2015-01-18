@@ -1,0 +1,21 @@
+{
+  "name": "football",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jetpacmonkey/football",
+  "authors": [
+    "Jeremy Tice <jeremy@jeremytice.com>"
+  ],
+  "description": "Online version of the paper-and-dice game the Emmas made in meatspace",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}
