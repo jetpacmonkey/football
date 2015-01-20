@@ -11,10 +11,8 @@ from api import serializers
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = serializers.PlayerSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
 
 class DraftViewSet(viewsets.ModelViewSet):
     queryset = Draft.objects.all()
     serializer_class = serializers.DraftSerializer
-    permission_classes = (permissions.IsAuthenticated,)

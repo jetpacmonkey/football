@@ -98,6 +98,12 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = '/var/www/football-static/'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
 try:
     from local_settings import *
 except:
