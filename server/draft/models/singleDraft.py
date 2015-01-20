@@ -76,6 +76,9 @@ class Draft(Base):
 
     def currentDrafter(self):
         numDrafters = self.drafters.count()
+        if numDrafters == 0:
+            return None
+
         curPos = self.numDrafted % numDrafters
         curRound = self.numDrafted // numDrafters
         if curRound % 2:
