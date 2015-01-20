@@ -50,6 +50,9 @@ class Draft(Base):
     draftees = models.ManyToManyField(Player, through=Draftee)
     numDrafted = models.PositiveIntegerField(default=0)
 
+    def __unicode__(self):
+        return "{name} ({num} players drafted)".format(name=self.name, num=self.numDrafted)
+
     def addDrafter(self, user):
         drafter = Drafter()
         drafter.draft = self
