@@ -48,6 +48,7 @@ class Draft(Base):
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)
     drafters = models.ManyToManyField(User, through=Drafter)
     draftees = models.ManyToManyField(Player, through=Draftee)
+    numDrafted = models.PositiveIntegerField(default=0)
 
     def addDrafter(self, user):
         drafter = Drafter()
@@ -71,7 +72,14 @@ class Draft(Base):
 
 
     def currentDrafter(self):
-        return self.drafters.all()[0].user
+        numDrafters = self.drafters.count()
+        curPos = self.numDrafted % numDrafters
+        curRound = self.numDrafted // numDrafters
+        if curRound % 2:
+            # odd round (0-indexed), reverse order
+            return self.drafters.reverse()[curPos]
+        else:
+            return self.drafters.all()[curPos]
 
     def draftPlayer(self, player, type=None):
         if not self.getAvailablePlayers(type).filter(id=player.id).exists():
@@ -80,4 +88,7 @@ class Draft(Base):
         draftee.draft = self
         draftee.user = self.currentDrafter()
         draftee.player = player
+        self.draftees.add(draftee)
+        self.numDrafted = self.numDrafted + 1
+        self.save()
 
