@@ -6,7 +6,7 @@ from common.models import Base, Player
 class Drafter(Base):
     draft = models.ForeignKey('Draft')
     user = models.ForeignKey(User)
-    position = models.PositiveSmallIntegerField()
+    position = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
         unique_together = ('draft', 'position')
@@ -44,8 +44,21 @@ class Draft(Base):
         (TYPE_1WAY, '1-way players'),
         (TYPE_CLONE, 'Cloned 1-way players'),  # offense and defensive versions of the same player can be taken
     )
+
+    STATE_PREDRAFT = 'P'
+    STATE_DRAFTING = 'D'
+    STATE_POSTDRAFT = 'F'
+
+    STATE_CHOICES = (
+        (STATE_PREDRAFT, 'Pre-draft'),
+        (STATE_DRAFTING, 'Drafting'),
+        (STATE_POSTDRAFT, 'Post-draft'),
+    )
+
     name = models.CharField(max_length=128)
-    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES, default=TYPE_2WAY)
+    owner = models.ForeignKey(User, related_name='draftOwner', null=True)
+    state = models.CharField(max_length=1, choices=STATE_CHOICES, default=STATE_PREDRAFT)
     drafters = models.ManyToManyField(User, through=Drafter)
     draftees = models.ManyToManyField(Player, through=Draftee)
     numDrafted = models.PositiveIntegerField(default=0)
@@ -57,8 +70,12 @@ class Draft(Base):
         drafter = Drafter()
         drafter.draft = self
         drafter.user = user
-        drafter.position = self.drafters.reverse()[0].position + 1
-        self.drafters.add(drafter)
+        if self.drafters.exists():
+            drafter.position = self.drafter_set.all().reverse()[0].position + 1
+        drafter.save()
+
+    def removeDrafter(self, user):
+        Drafter.objects.filter(draft=self, user=user).delete()
 
     def getAvailablePlayers(self, type=None):
         all = Player.objects.all()
@@ -94,7 +111,7 @@ class Draft(Base):
         draftee.draft = self
         draftee.user = self.currentDrafter()
         draftee.player = player
-        self.draftees.add(draftee)
+        draftee.save()
         self.numDrafted = self.numDrafted + 1
         self.save()
 

@@ -18,7 +18,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 class DraftersField(serializers.Field):
     def to_representation(self, obj):
-        return list(obj.values_list('drafter', flat=True))
+        return list(obj.values_list('id', flat=True))
 
 
 class DraftSerializer(serializers.ModelSerializer):
@@ -26,4 +26,4 @@ class DraftSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Draft
-        fields = ('id', 'name', 'type', 'drafters')
+        fields = ('id', 'name', 'owner', 'state', 'type', 'drafters')

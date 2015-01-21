@@ -10,6 +10,7 @@ from common.models import Player
 from draft.models import Draft
 
 from api import serializers
+from api import permissions as api_permissions
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
@@ -17,21 +18,35 @@ class PlayerViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PlayerSerializer
 
 
-class DraftPermission(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        drafterId = request.data.get('user', None)
-        currentDrafter = obj.currentDrafter()
-        return currentDrafter and currentDrafter.id == drafterId and request.user.id == drafterId
-
-
 class DraftViewSet(viewsets.ModelViewSet):
     queryset = Draft.objects.all()
     serializer_class = serializers.DraftSerializer
+    permission_classes = (api_permissions.IsDraftOwnerOrReadOnly,)
 
-    @detail_route(methods=('POST',), permission_classes=(DraftPermission,))
+    @detail_route(methods=('POST',), permission_classes=(api_permissions.CanDraft,))
     def draft_player(self, request, pk):
         draft = self.get_object()
         type = request.data.get('type', None)
         player = get_object_or_404(draft.getAvailablePlayers(type), id=request.data.get('player', None))
         draft.draftPlayer(player, type)
         return Response({"status": "ok"})
+
+    @detail_route(
+        methods=('POST',),
+        permission_classes=(api_permissions.IsDraftOwner, api_permissions.IsPredraft)
+        )
+    def add_drafter(self, request, pk):
+        draft = self.get_object()
+        drafter = get_object_or_404(User, id=request.data.get('user', None))
+        draft.addDrafter(drafter)
+        return self.retrieve(request, pk)
+
+    @detail_route(
+        methods=('POST',),
+        permission_classes=(api_permissions.IsDraftOwner, api_permissions.IsPredraft)
+        )
+    def remove_drafter(self, request, pk):
+        draft = self.get_object()
+        drafter = get_object_or_404(User, id=request.data.get('user', None))
+        draft.removeDrafter(drafter)
+        return self.retrieve(request, pk)
