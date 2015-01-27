@@ -50,3 +50,9 @@ class DraftViewSet(viewsets.ModelViewSet):
         drafter = get_object_or_404(User, id=request.data.get('user', None))
         draft.removeDrafter(drafter)
         return self.retrieve(request, pk)
+
+    @detail_route()
+    def current_drafter(self, request, pk):
+        draft = self.get_object()
+        drafter = draft.currentDrafter()
+        return Response({"user": drafter.id if drafter else None})
