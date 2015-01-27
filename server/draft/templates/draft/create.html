@@ -1,4 +1,9 @@
 {% extends "draft/base.html" %}
+
+{% load staticfiles %}
+
+{% block jsMain %}{% static 'draft/views/create' %}{% endblock %}
+
 {% block content %}
 <div class="text">
 	bbb

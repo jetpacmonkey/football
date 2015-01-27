@@ -1,9 +1,13 @@
-(function() {
+var require = (function() {
     var STATIC_ROOT = window.STATIC_ROOT || '/static/',
         VENDOR_ROOT = STATIC_ROOT + 'vendor/';
-    window.require = {
-        'map': {
-            'jquery': VENDOR_ROOT + 'jquery/jquery'
+    return {
+        'paths': {
+            'jquery': VENDOR_ROOT + 'jquery/jquery',
+            'lodash': VENDOR_ROOT + 'lodash/lodash',
+
+            'common': STATIC_ROOT + 'common',
+            'draft': STATIC_ROOT + 'draft'
         }
     };
 })();
