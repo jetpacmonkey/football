@@ -18,6 +18,11 @@ class PlayerViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PlayerSerializer
 
 
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+
 class DraftViewSet(viewsets.ModelViewSet):
     queryset = Draft.objects.all()
     serializer_class = serializers.DraftSerializer

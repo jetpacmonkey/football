@@ -6,6 +6,7 @@ from api import views
 router = DefaultRouter()
 router.register('players', views.PlayerViewSet)
 router.register('drafts', views.DraftViewSet)
+router.register('users', views.UserViewSet)
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
