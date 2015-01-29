@@ -14,6 +14,10 @@ define([
 
             self.constructor = self.constructor || BaseModel;
 
+            util.configFields(self, _.assign({}, self.constructor.fields, {
+                'id': 'int'
+            }));
+
             self.getInfo = function() {
                 var info = $.extend({}, self.constructor.info);
                 info.plural = info.plural || (info.name.decapitalize() + 's');
@@ -40,18 +44,22 @@ define([
             }
 
             self.fetch = function fetch(id, config) {
-                var config = $.extend({
+                config = $.extend({
                     url: API_ROOT + self.getInfo().plural + '/' + id + '/'
                 }, config);
 
-                $.getJSON(config.url, function(response) {
+                return $.getJSON(config.url, function(response) {
                     self.fromJSON(response);
                 });
             };
 
-            util.configFields(self, {
-                'id': 'int'
-            });
+            self.getList = function(config) {
+                config = $.extend({
+                    url: API_ROOT + self.getInfo().plural + '/'
+                }, config);
+
+                return $.getJSON(config.url);
+            };
         }
 
         return BaseModel;
