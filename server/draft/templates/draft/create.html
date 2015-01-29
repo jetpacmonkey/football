@@ -5,7 +5,34 @@
 {% block jsMain %}{% static 'draft/views/create' %}{% endblock %}
 
 {% block content %}
-<div class="text">
-	bbb
-</div>
+<form class="info-box settings-area">
+    <div class="one-setting">
+        <label for="draft_name">Draft Name</label>
+        <div class="input-area">
+            <input type="text" id="draft_name" name="name">
+        </div>
+    </div>
+    <div class="one-setting">
+        <label>Draft Type</label>
+        <ul class="input-area">
+            <li>
+                <input id="draft_type_1" type="radio" name="type" value="1">
+                <label for="draft_type_1">1-way Players</label>
+            </li>
+            <li>
+                <input id="draft_type_2" type="radio" name="type" value="2" checked="checked">
+                <label for="draft_type_2">2-way Players</label>
+            </li>
+            <li>
+                <input id="draft_type_C" type="radio" name="type" value="C" disabled>
+                <label for="draft_type_C">Cloned 1-way Players (available for both offense/defense)</label>
+            </li>
+    </div>
+    <div class="one-setting">
+        <label for="draft_draftees"></label>
+        <div class="input-area">
+
+        </div>
+    </div>
+</form>
 {% endblock %}

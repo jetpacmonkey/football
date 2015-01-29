@@ -1,16 +1,44 @@
 define([
         'jquery',
-        'draft/models/draft'
+
+        'common/models/user',
+        'draft/models/draft',
     ], function(
         $,
+        User,
         Draft
     ) {
         function CreateDraftView() {
-            d = new Draft();
+            var self = this;
 
-            d.fetch(5);
+            self.areas = {
 
-            console.debug(d);
+            };
+
+            self.users = [];
+            self.draft = new Draft();
+
+            self.promises = {};
+
+            self.loadUsers = function() {
+                self.promises.users = (new User()).getList()
+                    .done(function(response) {
+                        self.users = response;
+                        self.updateUsers();
+                    });
+            };
+
+            self.updateUsers = function() {
+
+            };
+
+            self.init = function() {
+                return $.when(
+                    self.loadUsers()
+                );
+            };
+
+            self.init();
         }
 
         return new CreateDraftView();
