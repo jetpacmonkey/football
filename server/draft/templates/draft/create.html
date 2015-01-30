@@ -5,7 +5,7 @@
 {% block jsMain %}{% static 'draft/views/create' %}{% endblock %}
 
 {% block content %}
-<form class="info-box settings-area">
+<form class="info-box settings-area create-draft">
     <div class="one-setting">
         <label for="draft_name">Draft Name</label>
         <div class="input-area">
@@ -27,6 +27,7 @@
                 <input id="draft_type_C" type="radio" name="type" value="C" disabled>
                 <label for="draft_type_C">Cloned 1-way Players (available for both offense/defense)</label>
             </li>
+        </ul>
     </div>
     <div class="one-setting">
         <label for="draft_draftees">Draftees</label>
@@ -34,5 +35,8 @@
             <select name="draftees" multiple="multiple"></select>
         </div>
     </div>
+    <footer class="actions-area">
+        <input type="submit" class="button" value="Create Draft">
+    </footer>
 </form>
 {% endblock %}
