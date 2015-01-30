@@ -14,7 +14,7 @@ define([
 
             self.constructor = self.constructor || BaseModel;
 
-            util.configFields(self, _.assign({}, self.constructor.fields, {
+            util.configFields(self, _.assign({}, self.constructor.info.fields, {
                 'id': 'int'
             }));
 
@@ -26,8 +26,8 @@ define([
 
             self.fromJSON = function(json) {
                 _.forIn(json, function(val, key) {
-                    if (_.isFunction(self['set' + key.capitalize()])) {
-                        self['set' + key.capitalize()](val);
+                    if (_.isFunction(self['set' + util.toCamel(key.capitalize())])) {
+                        self['set' + util.toCamel(key.capitalize())](val);
                     } else if (_.isFunction(self['get' + key.capitalize()])) {
                         console.warn('No setter found for field', key);
                     } else {
@@ -58,7 +58,14 @@ define([
                     url: API_ROOT + self.getInfo().plural + '/'
                 }, config);
 
-                return $.getJSON(config.url);
+                return $.getJSON(config.url)
+                    .then(function(response) {
+                        return _.map(response, function(item) {
+                            obj = new self.constructor();
+                            obj.fromJSON(item);
+                            return obj;
+                        });
+                    });
             };
         }
 
