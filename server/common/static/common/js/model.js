@@ -67,6 +67,29 @@ define([
                         });
                     });
             };
+
+            self.create = function(config) {
+                var self = this;
+
+                config = $.extend({
+                    'url': API_ROOT + self.getInfo().plural + '/'
+                }, config);
+
+                return $.ajax({
+                    'url': config.url,
+                    'type': 'POST',
+                    'data': JSON.stringify(self.toJSON()),
+                    'contentType': 'application/json',
+                    'dataType': 'json',
+                    'headers': {
+                        'X-CSRFToken': util.getCookie('csrftoken')
+                    }
+                })
+                    .then(function(response) {
+                        self.setId(response.id);
+                        return self;
+                    });
+            };
         }
 
         return BaseModel;

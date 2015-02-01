@@ -1,4 +1,4 @@
-define(['lodash'], function(_) {
+define(['lodash', 'jquery'], function(_, $) {
     var decapitalize = function() {
         return this.charAt(0).toLowerCase() + this.substr(1);
     };
@@ -40,6 +40,22 @@ define(['lodash'], function(_) {
         });
     };
 
+    var getCookie = function(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = $.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+
     return {
         decapitalize: function(s) {
             return decapitalize.call(s);
@@ -48,6 +64,7 @@ define(['lodash'], function(_) {
             return capitalize.call(s);
         },
         toCamel: toCamel,
-        configFields: configFields
+        configFields: configFields,
+        getCookie: getCookie
     };
 });

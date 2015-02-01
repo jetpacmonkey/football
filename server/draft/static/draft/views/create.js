@@ -48,7 +48,11 @@ define([
                     'type': self.areas.form.find('[name="type"]:checked').val(),
                     'drafters': _.map(self.areas.userSelect.val(), Number),
                 });
-                console.debug(newDraft);
+                return newDraft.create()
+                    .done(function(draft) {
+                        //redirect
+                        //window.location = '/draft/' + draft.getId();
+                    });
             };
 
             self.setHandlers = function() {
