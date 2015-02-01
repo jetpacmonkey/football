@@ -4,7 +4,9 @@ from draft.models import Draft
 
 
 def index(request):
-    return create(request)
+    return render(request, 'draft/index.html', {
+
+    })
 
 
 # Create your views here.

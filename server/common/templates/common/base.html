@@ -10,6 +10,21 @@
         {% block js %}{% endblock %}
     </head>
     <body>
+        {% block header_override %}
+        <header class="main-header">
+            <nav>
+                <ul class="main-header-primary main-header-section">
+                    <li><a href="{% url 'common.views.index' %}">Home</a></li>
+                    <li><a href="{% url 'draft.views.index' %}">Draft</a></li>
+                </ul>
+                {% if user.is_staff %}
+                <ul class="main-header-section">
+                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                </ul>
+                {% endif %}
+            </nav>
+        </header>
+        {% endblock %}
         {% block body %}
 
         {% endblock %}

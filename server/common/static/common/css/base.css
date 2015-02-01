@@ -7,3 +7,53 @@ body {
 * {
     box-sizing: border-box;
 }
+
+.main-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: block;
+}
+
+.main-header > nav {
+    display: flex;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.main-header-section {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.main-header-section li {
+    display: block;
+}
+
+.main-header-section li a {
+    display: block;
+    height: 40px;
+    line-height: 20px;
+    padding: 10px;
+    text-decoration: none;
+    color: #226;
+
+    background: rgba(255, 255, 255, 0.3);
+    border-left: 1px solid #eee;
+}
+
+.main-header-section li:first-child a {
+    border-left: none;
+}
+
+.main-header-section li a:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.main-header-primary {
+    flex: 1;
+}
+
+
