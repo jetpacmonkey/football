@@ -4,6 +4,10 @@
 
 {% block jsMain %}{% static 'draft/views/create' %}{% endblock %}
 
+{% block pageCSS %}
+<link rel="stylesheet" type="text/css" href="{% static 'draft/css/create.css' %}">
+{% endblock %}
+
 {% block content %}
 <form class="info-box settings-area create-draft">
     <div class="one-setting">
