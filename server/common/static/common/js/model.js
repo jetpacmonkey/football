@@ -41,7 +41,18 @@ define([
 
             self.toJSON = function() {
                 return self._vals;
-            }
+            };
+
+            self.ajax = function(opts) {
+                return $.ajax(_.assign({}, {
+                    'type': 'GET',
+                    'contentType': 'application/json',
+                    'dataType': 'json',
+                    'headers': {
+                        'X-CSRFToken': util.getCookie('csrftoken')
+                    }
+                }, opts));
+            };
 
             self.fetch = function fetch(id, config) {
                 config = $.extend({
@@ -86,7 +97,7 @@ define([
                     }
                 })
                     .then(function(response) {
-                        self.setId(response.id);
+                        self.fromJSON(response);
                         return self;
                     });
             };

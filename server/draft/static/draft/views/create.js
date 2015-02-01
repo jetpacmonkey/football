@@ -15,7 +15,7 @@ define([
             self.areas = {};
             self.areas.form = $('.create-draft');
 
-            self.areas.userSelect = self.areas.form.find('[name="draftees"]');
+            self.areas.userSelect = self.areas.form.find('[name="drafters"]');
             self.areas.submit = self.areas.form.find('input[type="submit"]');
 
             self.users = [];
@@ -42,13 +42,26 @@ define([
             };
 
             self.createDraft = function() {
-                var newDraft = new Draft();
+                var newDraft = new Draft(),
+                    drafterIds = _.map(self.areas.userSelect.val(), Number);
                 newDraft.fromJSON({
                     'name': self.areas.form[0].name.value,
                     'type': self.areas.form.find('[name="type"]:checked').val(),
-                    'drafters': _.map(self.areas.userSelect.val(), Number),
+                    'drafters': drafterIds,
                 });
                 return newDraft.create()
+                    .then(function(draft) {
+                        if (draft.getDrafters().length) {
+                            //API added drafters, I must've gotten better at Python or something
+                            return draft;
+                        } else {
+                            //Drafters need to be added one-at-a-time
+                            var promises = _.map(drafterIds, function(id) {
+                                return draft.addDrafter(id);
+                            });
+                            return $.when.apply($, promises);
+                        }
+                    })
                     .done(function(draft) {
                         //redirect
                         //window.location = '/draft/' + draft.getId();

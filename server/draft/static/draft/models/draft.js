@@ -1,7 +1,8 @@
 define([
+        'jquery',
         'common/js/util',
         'common/js/model'
-    ], function(util, Base) {
+    ], function($, util, Base) {
         function Draft() {
             var self = this;
 
@@ -11,6 +12,20 @@ define([
 
             self.checkCurrentDrafter = function() {
 
+            };
+
+            self.addDrafter = function(drafterId) {
+                return self.ajax({
+                    'url': '/api/' + self.getInfo().plural + '/' + self.getId() + '/add_drafter/',
+                    'type': 'POST',
+                    'data': JSON.stringify({
+                        'user': drafterId
+                    })
+                })
+                    .then(function(response) {
+                        self.fromJSON(response);
+                        return self;
+                    });
             };
         }
 
@@ -22,7 +37,7 @@ define([
                 'type': 'string',
                 'state': 'string',
                 'drafters': 'array'
-            }
+            },
         };
 
         return Draft;
