@@ -35,14 +35,14 @@ class Draftee(Base):
 
 
 class Draft(Base):
-    TYPE_2WAY = '2'
-    TYPE_1WAY = '1'
-    TYPE_CLONE = 'C'
+    PLAYER_TYPE_2WAY = '2'
+    PLAYER_TYPE_1WAY = '1'
+    PLAYER_TYPE_CLONE = 'C'
 
-    TYPE_CHOICES = (
-        (TYPE_2WAY, '2-way players'),
-        (TYPE_1WAY, '1-way players'),
-        (TYPE_CLONE, 'Cloned 1-way players'),  # offense and defensive versions of the same player can be taken
+    PLAYER_TYPE_CHOICES = (
+        (PLAYER_TYPE_1WAY, '1-way players'),
+        (PLAYER_TYPE_2WAY, '2-way players'),
+        (PLAYER_TYPE_CLONE, 'Cloned 1-way players'),  # offense and defensive versions of the same player can be taken
     )
 
     STATE_PREDRAFT = 'P'
@@ -56,7 +56,7 @@ class Draft(Base):
     )
 
     name = models.CharField(max_length=128)
-    type = models.CharField(max_length=1, choices=TYPE_CHOICES, default=TYPE_2WAY)
+    type = models.CharField(max_length=1, choices=PLAYER_TYPE_CHOICES, default=PLAYER_TYPE_2WAY)
     owner = models.ForeignKey(User, related_name='draftOwner', null=True)
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default=STATE_PREDRAFT)
     drafters = models.ManyToManyField(User, through=Drafter)
@@ -79,9 +79,9 @@ class Draft(Base):
 
     def getAvailablePlayers(self, type=None):
         all = Player.objects.all()
-        if self.type in (TYPE_1WAY, TYPE_2WAY):
+        if self.type in (PLAYER_TYPE_1WAY, PLAYER_TYPE_2WAY):
             all = all.exclude(id__in=self.draftees())
-        elif self.type == TYPE_CLONE:
+        elif self.type == PLAYER_TYPE_CLONE:
             if type:
                 all = all.exclude(
                     id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE) |

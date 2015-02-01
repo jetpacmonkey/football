@@ -68,15 +68,6 @@
     align-items: stretch;
 
     height: 60px;
-
-    background: linear-gradient(to right, transparent 0%, transparent 10%, rgba(40, 180, 40, 0.8));
-    background-size: 100% 100%;
-
-    transition: background-size linear 1s;
-}
-
-.settings-area > .actions-area:hover {
-    background: linear-gradient(to right, transparent 0%, transparent 10%, rgba(40, 180, 40, 1));
 }
 
 .settings-area > .actions-area > .button {
@@ -90,6 +81,7 @@
     font-size: 20px;
     flex: 1;
     padding: 0 20px;
+    background: linear-gradient(to right, transparent 0%, transparent 10%, rgba(40, 180, 40, 0.8));
 }
 
 .settings-area > .actions-area > .button:focus {
@@ -98,4 +90,13 @@
 
 .settings-area > .actions-area > .button:active {
     box-shadow: inset 0 0 10px #666;
+}
+
+.settings-area > .actions-area > .button:hover:not([disabled]) {
+    background: linear-gradient(to right, transparent, rgba(40, 180, 40, 1));
+}
+
+.settings-area > .actions-area > .button[disabled] {
+    opacity: 0.6;
+    cursor: default;
 }

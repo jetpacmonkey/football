@@ -15,18 +15,13 @@
     <div class="one-setting">
         <label>Draft Type</label>
         <ul class="input-area">
+            {% for type in PLAYER_TYPE_CHOICES %}
             <li>
-                <input id="draft_type_1" type="radio" name="type" value="1">
-                <label for="draft_type_1">1-way Players</label>
+                <input id="draft_type_{{ type.0 }}" type="radio" name="type" value="{{ type.0 }}"
+                    {% if type.0 == DEFAULT_PLAYER_TYPE %} checked {% endif %}>
+                <label for="draft_type_{{ type.0 }}">{{ type.1 }}</label>
             </li>
-            <li>
-                <input id="draft_type_2" type="radio" name="type" value="2" checked="checked">
-                <label for="draft_type_2">2-way Players</label>
-            </li>
-            <li>
-                <input id="draft_type_C" type="radio" name="type" value="C" disabled>
-                <label for="draft_type_C">Cloned 1-way Players (available for both offense/defense)</label>
-            </li>
+            {% endfor %}
         </ul>
     </div>
     <div class="one-setting">
@@ -36,7 +31,7 @@
         </div>
     </div>
     <footer class="actions-area">
-        <input type="submit" class="button" value="Create Draft">
+        <input type="submit" class="button" value="Create Draft" disabled>
     </footer>
 </form>
 {% endblock %}
