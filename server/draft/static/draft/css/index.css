@@ -1,0 +1,67 @@
+.draft-index-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15%;
+    width: 70%;
+    color: #eee;
+    background-color: rgba(80, 80, 140, 0.5);
+    box-shadow: 0 0 80px 10px rgb(80, 80, 140);
+
+    display: flex;
+}
+
+.draft-index-nav > ul {
+    flex: 1 1 50%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.draft-index-nav li {
+    font-size: 1.2em;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2px;
+
+    transition: 0.2s;
+}
+
+.draft-index-nav li:first-child {
+    margin-bottom: 0;
+}
+
+.draft-index-nav li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.draft-index-nav li a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.draft-index-nav li > label {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.draft-index-nav > .my-drafts {
+    opacity: 0;
+    flex: 0 1 0;
+    transition: all 0.4s;
+}
+
+.draft-index-nav > .my-drafts:empty::after {
+    content: "(no current drafts)";
+    display: block;
+    padding: 10px;
+    font-style: italic;
+}
+
+#show-my-drafts:checked + .my-drafts {
+    opacity: 1;
+    flex: 1 1 50%;
+}

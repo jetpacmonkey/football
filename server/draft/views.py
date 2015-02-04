@@ -4,8 +4,9 @@ from draft.models import Draft
 
 
 def index(request):
+    user_drafts = request.user.draft_set.all()
     return render(request, 'draft/index.html', {
-
+        "user_drafts": user_drafts
     })
 
 
