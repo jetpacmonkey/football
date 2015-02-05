@@ -56,15 +56,12 @@ define([
                             return draft;
                         } else {
                             //Drafters need to be added one-at-a-time
-                            var promises = _.map(drafterIds, function(id) {
-                                return draft.addDrafter(id);
-                            });
-                            return $.when.apply($, promises);
+                            return draft.addDrafter(drafterIds);
                         }
                     })
                     .done(function(draft) {
                         //redirect
-                        //window.location = '/draft/' + draft.getId();
+                        window.location = '/draft/' + draft.getId();
                     });
             };
 

@@ -28,6 +28,9 @@ class DraftViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DraftSerializer
     permission_classes = (api_permissions.IsDraftOwnerOrReadOnly,)
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
     @detail_route(methods=('POST',), permission_classes=(api_permissions.CanDraft,))
     def draft_player(self, request, pk):
         draft = self.get_object()
@@ -42,8 +45,14 @@ class DraftViewSet(viewsets.ModelViewSet):
         )
     def add_drafter(self, request, pk):
         draft = self.get_object()
-        drafter = get_object_or_404(User, id=request.data.get('user', None))
-        draft.addDrafter(drafter)
+        userId = request.data.get('user', None)
+        if hasattr(userId, "__iter__"):
+            ids = userId
+        else:
+            ids = [userId]
+        users = User.objects.filter(id__in=ids)
+        for u in users:
+            draft.addDrafter(u)
         return self.retrieve(request, pk)
 
     @detail_route(
