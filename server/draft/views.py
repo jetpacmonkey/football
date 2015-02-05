@@ -20,5 +20,5 @@ def create(request):
 def singleDraft(request, draftId):
     draft = get_object_or_404(Draft, id=draftId)
     return render(request, 'draft/singleDraft.html', {
-
+        'draft': draft
     })
