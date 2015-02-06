@@ -2,13 +2,15 @@ define([
         'jquery',
         'lodash',
         'draft/models/draft',
-        'common/models/user'
+        'common/models/user',
+        'common/models/player'
     ],
     function(
         $,
         _,
         Draft,
-        User
+        User,
+        Player
     ) {
         function SingleDraftView() {
             var self = this,
@@ -17,6 +19,7 @@ define([
 
             self.draft = new Draft();
             self.users = [];
+            self.players = [];
             self.currentDrafterId = null;
             self.currentDrafter = new User();
 
@@ -28,22 +31,32 @@ define([
             };
 
             self.fetchDraft = function() {
-                self.draft.fetch(draftId)
+                return self.draft.fetch(draftId)
                     .done(function() {
                         self.updateDraft();
                     });
             };
 
             self.fetchUsers = function() {
-                (new User()).getList()
+                return (new User()).getList()
                     .done(function(users) {
                         self.users = users;
                         self.updateUsers();
                     });
             };
 
-            self.updateUsers = function() {
+            self.fetchPlayers = function() {
+                return (new Player()).getList()
+                    .done(function(players) {
+                        self.players = players;
+                        self.updatePlayers();
+                    });
+            };
 
+            self.updateUsers = function() {
+                if (self.currentDrafterId) {
+                    self.updateCurrentDrafter();
+                }
             };
 
             self.updateDraft = function() {

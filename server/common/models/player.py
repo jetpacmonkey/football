@@ -24,7 +24,7 @@ class Player(Base):
     run_defense = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(5)])
     blitzing = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(5)])
 
-    # offensive_special = models.ManyToManyField(SpecialAbility, limit_choices_to={'type': 'defense'})
+    # defensive_special = models.ManyToManyField(SpecialAbility, limit_choices_to={'type': 'defense'})
 
     def __unicode__(self):
         return "{f} {l}".format(f=self.first_name, l=self.last_name)
