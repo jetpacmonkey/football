@@ -79,15 +79,15 @@ class Draft(Base):
 
     def getAvailablePlayers(self, type=None):
         all = Player.objects.all()
-        if self.type in (PLAYER_TYPE_1WAY, PLAYER_TYPE_2WAY):
+        if self.type in (self.PLAYER_TYPE_1WAY, self.PLAYER_TYPE_2WAY):
             all = all.exclude(id__in=self.draftees())
         elif self.type == PLAYER_TYPE_CLONE:
             if type:
                 all = all.exclude(
-                    id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE) |
+                    id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE) &
                         self.draftees.filter(type=Draftee.TYPE_DEFENSE))
             else:
-                all = all.exclude(id__in=self.draftees.filter(type))
+                all = all.exclude(id__in=self.draftees.filter(type=type))
         return all
 
 

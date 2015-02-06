@@ -26,7 +26,8 @@ define([
             self.init = function() {
                 return $.when(
                     self.fetchDraft(),
-                    self.fetchUsers()
+                    self.fetchUsers(),
+                    self.fetchPlayers()
                 );
             };
 
@@ -70,6 +71,10 @@ define([
                 if (cur) {
                     self.currentDrafter = cur;
                 }
+            };
+
+            self.updatePlayers = function() {
+
             };
 
             $(function() {

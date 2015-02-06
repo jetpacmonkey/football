@@ -70,3 +70,9 @@ class DraftViewSet(viewsets.ModelViewSet):
         draft = self.get_object()
         drafter = draft.currentDrafter()
         return Response({"user": drafter.id if drafter else None})
+
+    @detail_route()
+    def available_players(self, request, pk):
+        draft = self.get_object()
+        players = draft.getAvailablePlayers()
+        return Response(serializers.PlayerSerializer(players).data)
