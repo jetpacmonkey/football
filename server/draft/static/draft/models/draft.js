@@ -10,8 +10,14 @@ define([
 
             Base.apply(self);
 
-            self.checkCurrentDrafter = function() {
-
+            self.getCurrentDrafter = function() {
+                return self.ajax({
+                    'url': '/api/' + self.getInfo().plural + '/' + self.getId() + '/current_drafter/',
+                    'type': 'GET'
+                })
+                    .then(function(response) {
+                        return response.user;
+                    });
             };
 
             self.addDrafter = function(drafterId) {
