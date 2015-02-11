@@ -1,6 +1,7 @@
 define([
         'jquery',
         'lodash',
+        'knockout',
         'draft/models/draft',
         'common/models/user',
         'common/models/player'
@@ -8,6 +9,7 @@ define([
     function(
         $,
         _,
+        ko,
         Draft,
         User,
         Player
@@ -20,13 +22,38 @@ define([
                 draftId = +splitLocation[splitLocation.length - 1];
 
             self.draft = new Draft();
-            self.users = [];
-            self.players = [];
-            self.currentDrafterId = null;
-            self.currentDrafter = new User();
+            self.users = ko.observableArray();
+            self.players = ko.observableArray();
+            self.currentDrafterId = ko.observable(null);
 
-            self.indexes = {};
-            self.drafterUsers = [];
+            self.indexes = {
+                users: ko.computed(function() {
+                    return _.indexBy(self.users(), function(u) {
+                        return u.getId();
+                    });
+                }),
+                players: ko.computed(function() {
+                    return _.indexBy(self.players(), function(p) {
+                        return p.getId();
+                    });
+                })
+            };
+
+            self.drafterUsers = ko.computed(function() {
+                var index = self.indexes.users() || {};
+                self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
+                    return index[uid] || uid;
+                });
+            });
+
+            self.currentDrafter = ko.computed(function() {
+                var u = self.indexes.users()[self.currentDrafterId()];
+                if (u) {
+                    return u;
+                } else {
+                    return new User();
+                }
+            });
 
             self.draftInfoTimeout = null;
 
@@ -39,25 +66,20 @@ define([
             };
 
             self.fetchDraft = function() {
-                return self.draft.fetch(draftId)
-                    .done(function() {
-                        self.updateDraft();
-                    });
+                return self.draft.fetch(draftId);
             };
 
             self.fetchUsers = function() {
                 return (new User()).getList()
                     .done(function(users) {
-                        self.users = users;
-                        self.updateUsers();
+                        self.users(users);
                     });
             };
 
             self.fetchPlayers = function() {
                 return (new Player()).getList()
                     .done(function(players) {
-                        self.players = players;
-                        self.updatePlayers();
+                        self.players(players);
                     });
             };
 
@@ -65,8 +87,7 @@ define([
                 if (self.draft && self.draft.getId()) {
                     return self.draft.getCurrentDrafter()
                         .done(function(userId) {
-                            self.currentDrafterId = userId;
-                            self.updateCurrentDrafter();
+                            self.currentDrafterId(userId);
                         });
                 } else {
                     return $.Deferred().reject('No draft');

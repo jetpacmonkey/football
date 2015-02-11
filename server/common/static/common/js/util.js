@@ -1,4 +1,8 @@
-define(['lodash', 'jquery'], function(_, $) {
+define([
+        'lodash',
+        'jquery',
+        'knockout'
+    ], function(_, $, ko) {
     var decapitalize = function() {
         return this.charAt(0).toLowerCase() + this.substr(1);
     };
@@ -30,12 +34,13 @@ define(['lodash', 'jquery'], function(_, $) {
     var configFields = function(C, config) {
         var vals = C._vals = {};
         _.forIn(config, function(type, key) {
+            vals[key] = ko.observable();
             C['get' + toCamel(key.capitalize())] = function() {
-                return vals[key];
+                return vals[key]();
             };
             C['set' + toCamel(key.capitalize())] = function(v) {
                 var translated = (translators[type] || translators.default)(v);
-                vals[key] = translated;
+                vals[key](translated);
             };
         });
     };

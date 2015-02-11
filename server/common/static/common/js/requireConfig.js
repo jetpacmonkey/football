@@ -5,6 +5,7 @@ var require = (function() {
         'paths': {
             'jquery': VENDOR_ROOT + 'jquery/jquery',
             'lodash': VENDOR_ROOT + 'lodash/lodash',
+            'knockout': VENDOR_ROOT + 'knockout/knockout',
 
             'common': STATIC_ROOT + 'common',
             'draft': STATIC_ROOT + 'draft'

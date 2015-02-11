@@ -1,10 +1,12 @@
 define([
         'jquery',
         'lodash',
+        'knockout',
         'common/js/util'
     ], function(
         $,
         _,
+        ko,
         util
     ) {
         var API_ROOT = '/api/';
@@ -40,7 +42,7 @@ define([
             };
 
             self.toJSON = function() {
-                return self._vals;
+                return _.mapValues(self._vals, ko.unwrap);
             };
 
             self.ajax = function(opts) {
