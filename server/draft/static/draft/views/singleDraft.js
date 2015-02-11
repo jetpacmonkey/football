@@ -26,6 +26,7 @@ define([
             self.currentDrafter = new User();
 
             self.indexes = {};
+            self.drafterUsers = [];
 
             self.draftInfoTimeout = null;
 
@@ -79,12 +80,25 @@ define([
                 self.indexes.users = _.indexBy(self.users, function(u) {
                     return u.getId();
                 });
+
+                //set up drafterUsers array
+                self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
+                    return self.indexes.users[uid];
+                });
             };
 
+            var firstUpdate = true;
             self.updateDraft = function() {
-                if (!self.draftInfoTimeout) {
+                if (firstUpdate) {
                     //kick off the polling if it's the first time
+                    firstUpdate = false;
                     self.pollDraftInfo();
+
+                    //set up drafterUsers array
+                    var index = self.indexes.users || {};
+                    self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
+                        return index[uid] || uid;
+                    });
                 }
             };
 
@@ -126,6 +140,6 @@ define([
             });
         }
 
-        return new SingleDraftView();
+        return window.sdv = new SingleDraftView();
     }
 );
