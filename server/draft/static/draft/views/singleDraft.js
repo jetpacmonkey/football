@@ -66,7 +66,13 @@ define([
             };
 
             self.fetchDraft = function() {
-                return self.draft.fetch(draftId);
+                var isFirstRun = (self.draft.getId() == null);
+                return self.draft.fetch(draftId)
+                    .done(function() {
+                        if (isFirstRun) {
+                            self.pollDraftInfo();
+                        }
+                    });
             };
 
             self.fetchUsers = function() {
@@ -92,50 +98,6 @@ define([
                 } else {
                     return $.Deferred().reject('No draft');
                 }
-            };
-
-            self.updateUsers = function() {
-                if (self.currentDrafterId) {
-                    self.updateCurrentDrafter();
-                }
-                self.indexes.users = _.indexBy(self.users, function(u) {
-                    return u.getId();
-                });
-
-                //set up drafterUsers array
-                self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
-                    return self.indexes.users[uid];
-                });
-            };
-
-            var firstUpdate = true;
-            self.updateDraft = function() {
-                if (firstUpdate) {
-                    //kick off the polling if it's the first time
-                    firstUpdate = false;
-                    self.pollDraftInfo();
-
-                    //set up drafterUsers array
-                    var index = self.indexes.users || {};
-                    self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
-                        return index[uid] || uid;
-                    });
-                }
-            };
-
-            self.updateCurrentDrafter = function() {
-                var cur = _.find(self.users, function(u) {
-                    return u.getId() == self.currentDrafterId;
-                });
-                if (cur) {
-                    self.currentDrafter = cur;
-                }
-            };
-
-            self.updatePlayers = function() {
-                self.indexes.players = _.indexBy(self.players, function(p) {
-                    return p.getId();
-                });
             };
 
             self.pollDraftInfo = function() {
