@@ -9,5 +9,13 @@
 {% endblock %}
 
 {% block content %}
+<ul class="drafters" data-bind="foreach: drafterUsers">
+    <li class="one-drafter" data-bind="
+        css: {
+            current: $root.currentDrafterId() == $data.getId()
+        },
+        text: getFirstName() + ' ' + getLastName()">
 
+    </li>
+</ul>
 {% endblock %}

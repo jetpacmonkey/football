@@ -62,7 +62,10 @@ define([
                     self.fetchDraft(),
                     self.fetchUsers(),
                     self.fetchPlayers()
-                );
+                )
+                    .done(function() {
+                        ko.applyBindings(self);
+                    });
             };
 
             self.fetchDraft = function() {
