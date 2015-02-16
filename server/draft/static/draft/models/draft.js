@@ -10,11 +10,13 @@ define([
 
             Base.apply(self);
 
-            var urlBase = '/api/' + self.getInfo().plural + '/' + self.getId() + '/';
+            var urlBase = function() {
+                return '/api/' + self.getInfo().plural + '/' + self.getId() + '/';
+            };
 
             self.getCurrentDrafter = function() {
                 return self.ajax({
-                    'url': urlBase + 'current_drafter/',
+                    'url': urlBase() + 'current_drafter/',
                     'type': 'GET'
                 })
                     .then(function(response) {
@@ -24,7 +26,7 @@ define([
 
             self.addDrafter = function(drafterId) {
                 return self.ajax({
-                    'url': urlBase + 'add_drafter/',
+                    'url': urlBase() + 'add_drafter/',
                     'type': 'POST',
                     'data': JSON.stringify({
                         'user': drafterId
@@ -38,7 +40,7 @@ define([
 
             self.getAvailablePlayers = function() {
                 return self.ajax({
-                    'url': urlBase + 'available_players/'
+                    'url': urlBase() + 'available_players/'
                 })
                     .then(function(response) {
                         return response.players;
