@@ -22,9 +22,15 @@ class DraftersField(serializers.Field):
         return list(obj.values_list('id', flat=True))
 
 
+class DrafteesField(serializers.Field):
+    def to_representation(self, obj):
+        return list(obj.values_list('id', flat=True))
+
+
 class DraftSerializer(serializers.ModelSerializer):
     drafters = DraftersField(read_only=True)
+    draftees = DrafteesField(read_only=True)
 
     class Meta:
         model = Draft
-        fields = ('id', 'name', 'owner', 'state', 'type', 'drafters')
+        fields = ('id', 'name', 'owner', 'state', 'type', 'drafters', 'draftees')

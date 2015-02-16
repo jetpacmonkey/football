@@ -80,12 +80,13 @@ class Draft(Base):
     def getAvailablePlayers(self, type=None):
         all = Player.objects.all()
         if self.type in (self.PLAYER_TYPE_1WAY, self.PLAYER_TYPE_2WAY):
-            all = all.exclude(id__in=self.draftees())
+            all = all.exclude(id__in=self.draftees.all())
         elif self.type == PLAYER_TYPE_CLONE:
+            draftee_objects = Draftee.objects.filter(draft=self)
             if type:
                 all = all.exclude(
-                    id__in=self.draftees.filter(type=Draftee.TYPE_OFFENSE) &
-                        self.draftees.filter(type=Draftee.TYPE_DEFENSE))
+                    id__in=(draftee_objects.filter(type=Draftee.TYPE_OFFENSE) &
+                        draftee_objects.filter(type=Draftee.TYPE_DEFENSE)).values_list('player', flat=True))
             else:
                 all = all.exclude(id__in=self.draftees.filter(type=type))
         return all
@@ -111,6 +112,7 @@ class Draft(Base):
         draftee.draft = self
         draftee.user = self.currentDrafter()
         draftee.player = player
+        draftee.number = self.numDrafted + 1
         draftee.save()
         self.numDrafted = self.numDrafted + 1
         self.save()

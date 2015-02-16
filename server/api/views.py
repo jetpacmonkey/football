@@ -75,4 +75,4 @@ class DraftViewSet(viewsets.ModelViewSet):
     def available_players(self, request, pk):
         draft = self.get_object()
         players = draft.getAvailablePlayers()
-        return Response(serializers.PlayerSerializer(players).data)
+        return Response({"players": players.values_list('id', flat=True)})

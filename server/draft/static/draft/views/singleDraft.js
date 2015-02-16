@@ -55,6 +55,17 @@ define([
                 }
             });
 
+            self.draftedPlayers = ko.computed(function() {
+                var userIndex = self.indexes.users();
+                return _.map(self.draft.getDraftees(), function(pid) {
+                    return userIndex[pid];
+                });
+            });
+
+            self.availablePlayers = ko.computed(function() {
+                return _.difference(self.players(), self.draftedPlayers());
+            });
+
             self.draftInfoTimeout = null;
 
             self.init = function() {
