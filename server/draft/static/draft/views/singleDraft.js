@@ -40,7 +40,7 @@ define([
             };
 
             self.drafterUsers = ko.computed(function() {
-                var index = self.indexes.users() || {};
+                var index = self.indexes.users();
                 self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
                     return index[uid] || uid;
                 });
@@ -110,7 +110,7 @@ define([
                             self.currentDrafterId(userId);
                         });
                 } else {
-                    return $.Deferred().reject('No draft');
+                    return $.Deferred().reject(new Error('No draft'));
                 }
             };
 
@@ -129,6 +129,9 @@ define([
                             self.draftInfoTimeout = null;
                             self.pollDraftInfo();
                         }, DRAFT_POLL_PERIOD);
+                    })
+                    .fail(function() {
+                        console.error('Error updating draft info', arguments);
                     });
             };
 
