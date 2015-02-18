@@ -1,0 +1,17 @@
+.drafters {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.one-drafter {
+    display: block;
+    background: rgba(40, 40, 140, 0.5);
+    line-height: 28px;
+    padding: 10px;
+    color: white;
+}
+
+.one-drafter.current {
+    background: rgba(140, 140, 40, 0.5);
+}
