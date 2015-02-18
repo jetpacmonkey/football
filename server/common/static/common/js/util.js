@@ -61,6 +61,10 @@ define([
         return cookieValue;
     };
 
+    var fetchSession = function() {
+        return $.getJSON('/api/session_info/');
+    };
+
     return {
         decapitalize: function(s) {
             return decapitalize.call(s);
@@ -70,6 +74,7 @@ define([
         },
         toCamel: toCamel,
         configFields: configFields,
-        getCookie: getCookie
+        getCookie: getCookie,
+        fetchSession: fetchSession
     };
 });

@@ -2,6 +2,7 @@ define([
         'jquery',
         'lodash',
         'knockout',
+        'common/js/util',
         'draft/models/draft',
         'common/models/user',
         'common/models/player'
@@ -10,6 +11,7 @@ define([
         $,
         _,
         ko,
+        util,
         Draft,
         User,
         Player
@@ -21,6 +23,7 @@ define([
                 splitLocation = window.location.pathname.split('/'),
                 draftId = +splitLocation[splitLocation.length - 1];
 
+            self.session = ko.observable({});
             self.draft = new Draft();
             self.users = ko.observableArray();
             self.players = ko.observableArray();
@@ -70,12 +73,20 @@ define([
 
             self.init = function() {
                 return $.when(
+                    self.fetchSession(),
                     self.fetchDraft(),
                     self.fetchUsers(),
                     self.fetchPlayers()
                 )
                     .done(function() {
                         ko.applyBindings(self);
+                    });
+            };
+
+            self.fetchSession = function() {
+                return util.fetchSession()
+                    .done(function(session) {
+                        self.session(session);
                     });
             };
 
