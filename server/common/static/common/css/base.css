@@ -58,6 +58,15 @@ body {
     flex: 1;
 }
 
+#content {
+    padding-top: 40px;
+    height: 100%;
+}
+
+.ko-pending {
+    display: none;
+}
+
 
 
 .offscreen {

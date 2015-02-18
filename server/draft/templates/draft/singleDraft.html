@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<ul class="drafters" data-bind="foreach: drafterUsers">
+<ul class="info-box drafters ko-pending" data-bind="foreach: drafterUsers, css: {'ko-pending': false}">
     <li class="one-drafter" data-bind="
         css: {
             current: $root.currentDrafterId() == $data.getId()
