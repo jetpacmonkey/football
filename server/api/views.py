@@ -1,6 +1,6 @@
 from rest_framework import permissions
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, api_view
 from rest_framework.response import Response
 
 from django.shortcuts import get_object_or_404
@@ -11,6 +11,13 @@ from draft.models import Draft
 
 from api import serializers
 from api import permissions as api_permissions
+
+
+@api_view()
+def session_info(request):
+    return Response({
+        "user": request.user.id
+    })
 
 
 class PlayerViewSet(viewsets.ModelViewSet):

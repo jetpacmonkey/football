@@ -9,5 +9,6 @@ router.register('drafts', views.DraftViewSet)
 router.register('users', views.UserViewSet)
 
 urlpatterns = patterns('',
+    url(r'^session_info/$', views.session_info),
     url(r'^', include(router.urls)),
 )
