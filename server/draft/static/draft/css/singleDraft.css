@@ -1,7 +1,36 @@
-.drafters {
+#content {
+    display: flex;
+    align-items: center;
+}
+
+.drafters-area:not(.ko-pending) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.drafters-header {
     margin: 0;
     padding: 0;
+    line-height: 1.6;
+    color: #333;
+    border-bottom: solid 2px rgba(40, 40, 140, 0.5);
+    background: rgba(230, 230, 255, 0.8);
+    text-align: center;
+}
+
+.drafters {
     list-style: none;
+
+    min-width: 200px;
+    flex: 1;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .one-drafter {
@@ -14,4 +43,8 @@
 
 .one-drafter.current {
     background: rgba(140, 140, 40, 0.5);
+}
+
+.one-drafter.self {
+    font-style: italic;
 }

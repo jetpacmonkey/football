@@ -9,13 +9,17 @@
 {% endblock %}
 
 {% block content %}
-<ul class="info-box drafters ko-pending" data-bind="foreach: drafterUsers, css: {'ko-pending': false}">
-    <li class="one-drafter" data-bind="
-        css: {
-            current: $root.currentDrafterId() == $data.getId()
-        },
-        text: getFirstName() + ' ' + getLastName()">
+<div class="drafters-area ko-pending" data-bind="css: {'ko-pending': false}">
+    <h2 class="drafters-header">Drafters</h2>
+    <ul class="info-box drafters" data-bind="foreach: drafterUsers">
+        <li class="one-drafter" data-bind="
+            css: {
+                current: $root.currentDrafterId() === $data.getId(),
+                self: $root.session().user === $data.getId()
+            },
+            text: getFirstName() + ' ' + getLastName()">
 
-    </li>
-</ul>
+        </li>
+    </ul>
+</div>
 {% endblock %}
