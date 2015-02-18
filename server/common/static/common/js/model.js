@@ -21,7 +21,7 @@ define([
             }));
 
             self.getInfo = function() {
-                var info = $.extend({}, self.constructor.info);
+                var info = _.assign({}, self.constructor.info);
                 info.plural = info.plural || (info.name.decapitalize() + 's');
                 return info;
             };
@@ -88,15 +88,10 @@ define([
                     'url': API_ROOT + self.getInfo().plural + '/'
                 }, config);
 
-                return $.ajax({
+                return self.ajax({
                     'url': config.url,
                     'type': 'POST',
                     'data': JSON.stringify(self.toJSON()),
-                    'contentType': 'application/json',
-                    'dataType': 'json',
-                    'headers': {
-                        'X-CSRFToken': util.getCookie('csrftoken')
-                    }
                 })
                     .then(function(response) {
                         self.fromJSON(response);
