@@ -11,6 +11,10 @@ define([
             self.constructor = Player;
 
             Base.call(self);
+
+            self.getName = function() {
+                return self.getFirstName() + ' ' + self.getLastName();
+            };
         }
 
         Player.info = {

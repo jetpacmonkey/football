@@ -17,9 +17,7 @@
                 current: $root.currentDrafterId() === $data.getId(),
                 self: $root.session().user === $data.getId()
             },
-            text: getFirstName() + ' ' + getLastName()">
-
-        </li>
+            text: getName()"></li>
     </ul>
 </div>
 <div class="main ko-pending" data-bind="css: {'ko-pending': false}">
@@ -29,7 +27,7 @@
     <h2 class="col-header">Drafted Players</h2>
     <ul class="info-box draftees" data-bind="foreach: draftedPlayers">
         <li class="one-drafted-player">
-            <span class="drafted-player-name" data-bind="text: getFirstName() + ' ' + getLastName()"></span>
+            <span class="drafted-player-name" data-bind="text: getName()"></span>
         </li>
     </ul>
 </div>
