@@ -21,12 +21,34 @@
     </ul>
 </div>
 <div class="main ko-pending" data-bind="css: {'ko-pending': false}">
+    <div class="players-area">
+        <div class="col info-box available-players-area">
+            <h2 class="col-header">Available Players</h2>
+            <ul class="available-players" data-bind="foreach: availablePlayers">
+                <li class="one-available-player" data-bind="
+                    css: {
+                        selected: $root.selectedPlayerId() === $data.getId()
+                    },
+                    text: getName(),
+                    click: $root.clickPlayer"></li>
+            </ul>
+        </div>
+        <div class="selected-player info-box">
+            <!-- ko if: selectedPlayer -->
+            <h2 class="col-header selected-player-name" data-bind="text: selectedPlayer().getName()"></h2>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div class="team-area info-box">
 
+    </div>
 </div>
 <div class="draftees-area col ko-pending" data-bind="css: {'ko-pending': false}">
     <h2 class="col-header">Drafted Players</h2>
     <ul class="info-box draftees" data-bind="foreach: draftedPlayers">
-        <li class="one-drafted-player">
+        <li class="one-drafted-player" data-bind="
+            click: $root.clickPlayer
+            ">
             <span class="drafted-player-name" data-bind="text: getName()"></span>
         </li>
     </ul>

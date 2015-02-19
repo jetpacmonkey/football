@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     min-width: 200px;
+    overflow: auto;
 }
 
 .col-header {
@@ -18,10 +19,8 @@
     border-bottom: solid 2px rgba(40, 40, 140, 0.5);
     background: rgba(230, 230, 255, 0.8);
     text-align: center;
-}
 
-.main {
-    flex: 1;
+    flex-shrink: 0;
 }
 
 .drafters {
@@ -53,10 +52,64 @@
     font-style: italic;
 }
 
+.main:not(.ko-pending) {
+    display: flex;
+}
+
+.main {
+    flex: 1;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    margin: 0 1px;
+}
+
+.players-area {
+    flex: 1;
+
+    display: flex;
+    align-items: stretch;
+}
+
+.available-players {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: auto;
+}
+
+.one-available-player {
+    display: block;
+    line-height: 28px;
+    padding: 10px;
+    border-top: 1px solid rgba(40, 40, 140, 0.3);
+    cursor: pointer;
+}
+
+.one-available-player:first-child {
+    border-top: none;
+}
+
+.one-available-player.selected {
+    background: rgba(140, 140, 40, 0.5);
+}
+
+.selected-player {
+    flex: 1;
+    margin-left: 1px;
+}
+
+.team-area {
+    flex: 1;
+    margin-top: 1px;
+}
+
 .draftees {
     list-style: none;
 
-    flex: 1;
+    flex: 1 0 auto;
 
     margin: 0;
     padding: 0;

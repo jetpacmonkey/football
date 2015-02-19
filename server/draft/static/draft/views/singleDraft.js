@@ -28,6 +28,7 @@ define([
             self.users = ko.observableArray();
             self.players = ko.observableArray();
             self.currentDrafterId = ko.observable(null);
+            self.selectedPlayerId = ko.observable(null);
 
             self.indexes = {
                 users: ko.computed(function() {
@@ -68,6 +69,19 @@ define([
             self.availablePlayers = ko.computed(function() {
                 return _.difference(self.players(), self.draftedPlayers());
             });
+
+            self.selectedPlayer = ko.computed({
+                read: function() {
+                    return self.indexes.players()[self.selectedPlayerId()];
+                },
+                write: function(val) {
+                    if (val instanceof Player) {
+                        self.selectedPlayerId(val.getId());
+                    } else {
+                        self.selectedPlayerId(val);
+                    }
+                }
+            })
 
             self.draftInfoTimeout = null;
 
@@ -144,6 +158,10 @@ define([
                     .fail(function() {
                         console.error('Error updating draft info', arguments);
                     });
+            };
+
+            self.clickPlayer = function(player) {
+                self.selectedPlayer(player);
             };
 
             $(function() {
