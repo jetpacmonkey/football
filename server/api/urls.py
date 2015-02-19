@@ -7,6 +7,7 @@ router = DefaultRouter()
 router.register('players', views.PlayerViewSet)
 router.register('drafts', views.DraftViewSet)
 router.register('users', views.UserViewSet)
+router.register('teams', views.TeamViewSet)
 
 urlpatterns = patterns('',
     url(r'^session_info/$', views.session_info),

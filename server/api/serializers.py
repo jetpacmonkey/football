@@ -3,7 +3,7 @@ import json
 from rest_framework import serializers
 
 from django.contrib.auth.models import User
-from common.models import Player
+from common.models import Player, Team
 from draft.models import Draft
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +15,11 @@ class UserSerializer(serializers.ModelSerializer):
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
 
 
 class DraftersField(serializers.Field):

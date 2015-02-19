@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
-from common.models import Player
+from common.models import Player, Team
 from draft.models import Draft
 
 from api import serializers
@@ -83,3 +83,8 @@ class DraftViewSet(viewsets.ModelViewSet):
         draft = self.get_object()
         players = draft.getAvailablePlayers()
         return Response({"players": players.values_list('id', flat=True)})
+
+
+class TeamViewSet(viewsets.ModelViewSet):
+    queryset = Team.objects.all()
+    serializer_class = serializers.TeamSerializer
