@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="drafters-area ko-pending" data-bind="css: {'ko-pending': false}">
-    <h2 class="drafters-header">Drafters</h2>
+<div class="drafters-area col ko-pending" data-bind="css: {'ko-pending': false}">
+    <h2 class="col-header">Drafters</h2>
     <ul class="info-box drafters" data-bind="foreach: drafterUsers">
         <li class="one-drafter" data-bind="
             css: {
@@ -19,6 +19,17 @@
             },
             text: getFirstName() + ' ' + getLastName()">
 
+        </li>
+    </ul>
+</div>
+<div class="main ko-pending" data-bind="css: {'ko-pending': false}">
+
+</div>
+<div class="draftees-area col ko-pending" data-bind="css: {'ko-pending': false}">
+    <h2 class="col-header">Drafted Players</h2>
+    <ul class="info-box draftees" data-bind="foreach: draftedPlayers">
+        <li class="one-drafted-player">
+            <span class="drafted-player-name" data-bind="text: getFirstName() + ' ' + getLastName()"></span>
         </li>
     </ul>
 </div>

@@ -1,28 +1,32 @@
 #content {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
-.drafters-area:not(.ko-pending) {
-    height: 100%;
+.col:not(.ko-pending) {
     display: flex;
     flex-direction: column;
+    min-width: 200px;
 }
 
-.drafters-header {
+.col-header {
     margin: 0;
     padding: 0;
     line-height: 1.6;
     color: #333;
+    border-top: solid 2px rgba(40, 40, 140, 0.5);
     border-bottom: solid 2px rgba(40, 40, 140, 0.5);
     background: rgba(230, 230, 255, 0.8);
     text-align: center;
 }
 
+.main {
+    flex: 1;
+}
+
 .drafters {
     list-style: none;
 
-    min-width: 200px;
     flex: 1;
 
     margin: 0;
@@ -47,4 +51,53 @@
 
 .one-drafter.self {
     font-style: italic;
+}
+
+.draftees {
+    list-style: none;
+
+    flex: 1;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    counter-reset: draftees;
+}
+
+.one-drafted-player {
+    position: relative;
+    display: block;
+    text-align: right;
+
+    line-height: 28px;
+    padding: 10px;
+    padding-right: 15px;
+
+    color: white;
+
+    border-top: solid 1px rgba(40, 40, 140, 0.3);
+}
+
+.drafted-player-name {
+    position: relative;
+}
+
+.one-drafted-player:first-child {
+    border-top: none;
+}
+
+.one-drafted-player::before {
+    counter-increment: draftees;
+
+    position: absolute;
+    content: counter(draftees);
+    right: 10px;
+    top: 10px;
+    font-size: 2.5em;
+    font-style: italic;
+    color: rgba(40, 140, 140, 0.6);
 }
