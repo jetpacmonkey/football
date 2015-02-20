@@ -2,9 +2,8 @@ from rest_framework import permissions
 
 class CanDraft(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        drafterId = request.data.get('user', None)
         currentDrafter = obj.currentDrafter()
-        return currentDrafter and currentDrafter.id == drafterId and request.user.id == drafterId
+        return currentDrafter and currentDrafter.id == request.user.id
 
 
 class IsDraftOwner(permissions.BasePermission):
