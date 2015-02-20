@@ -2,7 +2,9 @@ body {
     background-image: url('/static/common/img/index-back.jpg');
     background-size: cover;
     background-position: bottom center;
+}
 
+#content {
     display: flex;
     align-items: center;
     justify-content: center;

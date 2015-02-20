@@ -27,8 +27,12 @@ define([
             self.draft = new Draft();
             self.users = ko.observableArray();
             self.players = ko.observableArray();
-            self.currentDrafterId = ko.observable(null);
+            self.info = ko.observable({currentDrafter: null, draftees: []});
             self.selectedPlayerId = ko.observable(null);
+
+            self.currentDrafterId = ko.computed(function() {
+                return self.info().currentDrafter;
+            });
 
             self.indexes = {
                 users: ko.computed(function() {
@@ -60,14 +64,25 @@ define([
             });
 
             self.draftedPlayers = ko.computed(function() {
-                var userIndex = self.indexes.users();
-                return _.map(self.draft.getDraftees(), function(pid) {
-                    return userIndex[pid];
+                var playerIndex = self.indexes.players();
+                return _.map(self.info().draftees, function(drafteeData) {
+                    return {
+                        player: playerIndex[drafteeData[0]],
+                        type: drafteeData[1]
+                    };
                 });
             });
 
             self.availablePlayers = ko.computed(function() {
-                return _.difference(self.players(), self.draftedPlayers());
+                var type = self.draft.getType();
+                if (type === '2' || type == '1') {
+                    return _.difference(self.players(), _.map(self.draftedPlayers(), 'player'));
+                } else if (type === 'C') {
+                    var counts = _.countBy(self.draftedPlayers(), function(data) {return data.player.getId()}),
+                        takenBothWaysIds = _.keys(_.pick(counts, function(v) {return v == 2;}));
+                    return _.difference(self.players(),
+                        _.map(takenBothWaysIds, function(pid) {return self.indexes.players()[pid]}));
+                }
             });
 
             self.selectedPlayer = ko.computed({
@@ -81,7 +96,13 @@ define([
                         self.selectedPlayerId(val);
                     }
                 }
-            })
+            });
+
+            self.availableDraftTypes = ko.computed(function() {
+                var selectedPlayer = self.selectedPlayer(),
+                    info = {};
+
+            });
 
             self.draftInfoTimeout = null;
 
@@ -128,6 +149,17 @@ define([
                     });
             };
 
+            self.fetchDraftInfo = function() {
+                if (self.draft && self.draft.getId()) {
+                    return self.draft.fetchInfo()
+                        .done(function(info) {
+                            self.info(info);
+                        });
+                } else {
+                    return $.Deferred().reject(new Error('No draft'));
+                }
+            }
+
             self.fetchCurrentDrafter = function() {
                 if (self.draft && self.draft.getId()) {
                     return self.draft.getCurrentDrafter()
@@ -146,8 +178,7 @@ define([
                 }
 
                 $.when(
-                    self.fetchCurrentDrafter(),
-                    self.fetchDraft()
+                    self.fetchDraftInfo()
                 )
                     .done(function() {
                         self.draftInfoTimeout = window.setTimeout(function() {

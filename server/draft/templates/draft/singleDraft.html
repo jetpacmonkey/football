@@ -47,9 +47,12 @@
     <h2 class="col-header">Drafted Players</h2>
     <ul class="info-box draftees" data-bind="foreach: draftedPlayers">
         <li class="one-drafted-player" data-bind="
-            click: $root.clickPlayer
+            click: function() {$root.clickPlayer(player)},
+            css: {
+                selected: $root.selectedPlayerId() === player.getId()
+            }
             ">
-            <span class="drafted-player-name" data-bind="text: getName()"></span>
+            <span class="drafted-player-name" data-bind="text: player.getName()"></span>
         </li>
     </ul>
 </div>

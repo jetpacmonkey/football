@@ -46,6 +46,12 @@ define([
                         return response.players;
                     });
             };
+
+            self.fetchInfo = function() {
+                return self.ajax({
+                    'url': urlBase() + 'info/'
+                });
+            };
         }
 
         Draft.info = {
