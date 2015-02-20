@@ -88,9 +88,12 @@ class Draft(Base):
                     id__in=(draftee_objects.filter(type=Draftee.TYPE_OFFENSE) &
                         draftee_objects.filter(type=Draftee.TYPE_DEFENSE)).values_list('player', flat=True))
             else:
-                all = all.exclude(id__in=self.draftees.filter(type=type))
+                all = all.exclude(id__in=draftee_objects.filter(type=type).values_list('player', flat=True))
         return all
 
+    def getDrafteeData(self):
+        draftee_objects = Draftee.objects.filter(draft=self)
+        return [(d.player_id, d.type) for d in draftee_objects]
 
     def currentDrafter(self):
         numDrafters = self.drafters.count()
@@ -108,10 +111,17 @@ class Draft(Base):
     def draftPlayer(self, player, type=None):
         if not self.getAvailablePlayers(type).filter(id=player.id).exists():
             raise "Player can't be drafted"
+        elif self.type != self.PLAYER_TYPE_2WAY and type is None:
+            raise "Type is required when it's not a 2-way player draft"
+
+        if self.type == self.PLAYER_TYPE_2WAY:
+            type = Draftee.TYPE_BOTH
+
         draftee = Draftee()
         draftee.draft = self
         draftee.user = self.currentDrafter()
         draftee.player = player
+        draftee.type = type
         draftee.number = self.numDrafted + 1
         draftee.save()
         self.numDrafted = self.numDrafted + 1

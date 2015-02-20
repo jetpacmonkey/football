@@ -79,6 +79,15 @@ class DraftViewSet(viewsets.ModelViewSet):
         return Response({"user": drafter.id if drafter else None})
 
     @detail_route()
+    def info(self, request, pk):
+        draft = self.get_object()
+        drafter = draft.currentDrafter()
+        return Response({
+            "draftees": draft.getDrafteeData(),
+            "currentDrafter": drafter.id if drafter else None
+        })
+
+    @detail_route()
     def available_players(self, request, pk):
         draft = self.get_object()
         players = draft.getAvailablePlayers()
