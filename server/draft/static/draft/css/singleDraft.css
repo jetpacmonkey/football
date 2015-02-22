@@ -104,7 +104,87 @@
 .selected-player {
     flex: 1;
     margin-left: 1px;
+
+    display: flex;
+    flex-direction: column;
 }
+
+.player-stats {
+    flex: 1;
+    overflow: auto;
+
+    display: flex;
+
+    transition: font-size 0.4s;
+}
+
+.player-stats-section {
+    flex: 1;
+
+    overflow: auto;
+}
+
+.offense-stats {
+    background: rgba(140, 40, 40, 0.5);
+}
+
+.defense-stats {
+    background: rgba(40, 40, 140, 0.5);
+}
+
+.stats-section-header {
+    margin: 0;
+    padding: 0.2em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.stats-row-header {
+    text-align: center;
+    font-size: 1.1em;
+    font-style: italic;
+    margin: 0.1em;
+}
+
+.stats-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.one-stat {
+    text-align: center;
+    flex: 1;
+}
+
+.stat-label {
+    display: block;
+    padding: 4px;
+    font-weight: bold;
+}
+
+@media (max-height: 550px) {
+    .stat-label {
+        display: inline;
+    }
+
+    .stat-label::after {
+        content: ': ';
+    }
+
+    .stat-value {
+        display: inline;
+    }
+}
+
+@media (max-height: 400px) {
+    .player-stats {
+        font-size: 0.8em;
+    }
+}
+
+
 
 .team-area {
     flex: 1;
@@ -169,4 +249,41 @@
     font-style: italic;
     font-weight: bold;
     color: rgba(40, 140, 140, 0.6);
+}
+
+.one-drafted-player.type-O,
+.one-drafted-player.type-D {
+    padding-left: 20px;
+}
+
+.type-O::before,
+.type-D::before {
+    right: 10px;
+}
+
+.type-O::after,
+.type-D::after {
+    position: absolute;
+    content: "";
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20px;
+
+    color: rgba(255, 255, 255, 0.6);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.type-O::after {
+    content: 'O';
+    background: rgba(140, 40, 40, 0.8);
+}
+
+.type-D::after {
+    content: 'D';
+    background: rgba(40, 40, 140, 0.8);
 }

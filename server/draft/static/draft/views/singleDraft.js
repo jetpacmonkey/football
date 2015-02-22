@@ -126,12 +126,9 @@ define([
             };
 
             self.fetchDraft = function() {
-                var isFirstRun = (self.draft.getId() == null);
                 return self.draft.fetch(draftId)
                     .done(function() {
-                        if (isFirstRun) {
-                            self.pollDraftInfo();
-                        }
+                        self.pollDraftInfo();
                     });
             };
 
@@ -158,17 +155,6 @@ define([
                 } else {
                     return $.Deferred().reject(new Error('No draft'));
                 }
-            }
-
-            self.fetchCurrentDrafter = function() {
-                if (self.draft && self.draft.getId()) {
-                    return self.draft.getCurrentDrafter()
-                        .done(function(userId) {
-                            self.currentDrafterId(userId);
-                        });
-                } else {
-                    return $.Deferred().reject(new Error('No draft'));
-                }
             };
 
             self.pollDraftInfo = function() {
@@ -177,9 +163,7 @@ define([
                     draftInfoTimeout = null;
                 }
 
-                $.when(
-                    self.fetchDraftInfo()
-                )
+                self.fetchDraftInfo()
                     .done(function() {
                         self.draftInfoTimeout = window.setTimeout(function() {
                             self.draftInfoTimeout = null;

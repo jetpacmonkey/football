@@ -36,6 +36,76 @@
         <div class="selected-player info-box">
             <!-- ko if: selectedPlayer -->
             <h2 class="col-header selected-player-name" data-bind="text: selectedPlayer().getName()"></h2>
+            <div class="player-stats">
+                <div class="player-stats-section offense-stats">
+                    <h3 class="stats-section-header">Offense</h3>
+                    <div class="stats-row">
+                        <div class="one-stat">
+                            <label class="stat-label">Passing</label>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getPassing()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <label class="stat-label">Hands</label>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getHands()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <label class="stat-label">Rushing</label>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getRushing()"></div>
+                        </div>
+                    </div>
+                    <h4 class="stats-row-header">Receiving</h3>
+                    <div class="stats-row">
+                        <div class="one-stat">
+                            <label class="stat-label">Short</label>
+                            <div class="stat-value"
+                                data-bind="text: selectedPlayer().getReceiveShort()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <label class="stat-label">Mid</label>
+                            <div class="stat-value"
+                                data-bind="text: selectedPlayer().getReceiveMid()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <label class="stat-label">Deep</label>
+                            <div class="stat-value"
+                                data-bind="text: selectedPlayer().getReceiveDeep()"></div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="one-stat">
+                            <label class="stat-label">Blocking</label>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getBlocking()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <label class="stat-label">Kicking</label>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getKicking()"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="player-stats-section defense-stats">
+                    <h3 class="stats-section-header">Defense</h3>
+                    <div class="stats-row">
+                        <div class="one-stat">
+                            <div class="stat-label">Pass - Man</div>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getPassMan()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <div class="stat-label">Pass - Zone</div>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getPassZone()"></div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="one-stat">
+                            <div class="stat-label">Run Defense</div>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getRunDefense()"></div>
+                        </div>
+                        <div class="one-stat">
+                            <div class="stat-label">Blitzing</div>
+                            <div class="stat-value" data-bind="text: selectedPlayer().getBlitzing()"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- /ko -->
         </div>
     </div>
@@ -49,7 +119,9 @@
         <li class="one-drafted-player" data-bind="
             click: function() {$root.clickPlayer(player)},
             css: {
-                selected: $root.selectedPlayerId() === player.getId()
+                selected: $root.selectedPlayerId() === player.getId(),
+                'type-O': type === 'O',
+                'type-D': type === 'D'
             }
             ">
             <span class="drafted-player-name" data-bind="text: player.getName()"></span>
