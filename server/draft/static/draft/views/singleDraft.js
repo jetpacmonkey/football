@@ -100,8 +100,22 @@ define([
 
             self.availableDraftTypes = ko.computed(function() {
                 var selectedPlayer = self.selectedPlayer(),
+                    draftType = self.draft.getType(),
                     info = {};
 
+                if (draftType === '1') {
+                    info.O = info.D = !_.includes(_.pluck(self.draftedPlayers(), 'player'), selectedPlayer);
+                } else if (draftType === '2') {
+                    info.B = !_.includes(_.pluck(self.draftedPlayers(), 'player'), selectedPlayer);
+                } else {
+                    info.O = !_.includes(
+                        _.pluck(_.where(self.draftedPlayers(), {type: 'O'}), 'player'),
+                        selectedPlayer);
+                    info.D = !_.includes(
+                        _.pluck(_.where(self.draftedPlayers(), {type: 'D'}), 'player'),
+                        selectedPlayer);
+                }
+                return info;
             });
 
             self.draftInfoTimeout = null;

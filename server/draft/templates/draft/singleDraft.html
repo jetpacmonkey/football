@@ -106,6 +106,30 @@
                     </div>
                 </div>
             </div>
+            <footer class="player-actions">
+                <!-- ko if: 'B' in availableDraftTypes() -->
+                    <button class="draft-player type-both" data-bind="
+                        css: {
+                            'already-drafted': !availableDraftTypes().B
+                        }">
+                        Draft <!-- ko text: selectedPlayer().getName() --><!-- /ko -->
+                    </button>
+                <!-- /ko -->
+                <!-- ko ifnot: 'B' in availableDraftTypes() -->
+                    <button class="draft-player type-O" data-bind="
+                        css: {
+                            'already-drafted': !availableDraftTypes().O
+                        }">
+                        Draft <!-- ko text: selectedPlayer().getName() --><!-- /ko --> (offense)
+                    </button>
+                    <button class="draft-player type-D" data-bind="
+                        css: {
+                            'already-drafted': !availableDraftTypes().D
+                        }">
+                        Draft <!-- ko text: selectedPlayer().getName() --><!-- /ko --> (defense)
+                    </button>
+                <!-- /ko -->
+            </footer>
             <!-- /ko -->
         </div>
     </div>
