@@ -29,6 +29,14 @@ define([
             self.players = ko.observableArray();
             self.info = ko.observable({currentDrafter: null, draftees: []});
             self.selectedPlayerId = ko.observable(null);
+            self.selectedUserId = ko.observable(null);
+
+            //default to selecting the logged0in user
+            self.session.subscribe(function(session) {
+                if (!self.selectedUserId()) {
+                    self.selectedUserId(session.user);
+                }
+            });
 
             self.currentDrafterId = ko.computed(function() {
                 return self.info().currentDrafter;

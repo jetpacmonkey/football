@@ -15,7 +15,8 @@
         <li class="one-drafter" data-bind="
             css: {
                 current: $root.currentDrafterId() === $data.getId(),
-                self: $root.session().user === $data.getId()
+                self: $root.session().user === $data.getId(),
+                viewing: $root.selectedUserId() === $data.getId()
             },
             text: getName()"></li>
     </ul>

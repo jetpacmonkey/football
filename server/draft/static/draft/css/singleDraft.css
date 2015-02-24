@@ -37,20 +37,52 @@
 }
 
 .one-drafter {
+    position: relative;
     display: block;
     background: rgba(40, 40, 140, 0.5);
     line-height: 28px;
     padding: 10px;
     color: white;
+    cursor: pointer;
 }
 
+/* this drafter is picking next */
 .one-drafter.current {
     background: rgba(140, 140, 40, 0.5);
 }
 
+/* this drafter is logged in */
 .one-drafter.self {
     font-style: italic;
 }
+
+/* this drafter's drafted team is being displayed */
+.one-drafter.viewing {
+    padding-right: 20px;
+    cursor: default;
+}
+
+.one-drafter:hover::after,
+.one-drafter.viewing::after {
+    content: "\279C"; /* arrow icon */
+    position: absolute;
+    right: 0;
+    width: 20px;
+    text-align: center;
+
+    font-style: normal;
+    font-size: 12px;
+}
+
+.one-drafter:hover::after {
+    opacity: 0.4;
+}
+
+.one-drafter.viewing::after {
+    opacity: 1;
+}
+
+
 
 .main:not(.ko-pending) {
     display: flex;
@@ -314,6 +346,7 @@
 
 .one-drafted-player.selected {
     background: rgba(140, 140, 40, 0.5);
+    cursor: default;
 }
 
 .drafted-player-name {
