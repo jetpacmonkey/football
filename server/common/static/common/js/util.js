@@ -65,6 +65,14 @@ define([
         return $.getJSON('/api/session_info/');
     };
 
+    var getId = function(obj) {
+        if (obj && _.isFunction(obj.getId)) {
+            return obj.getId();
+        } else {
+            return obj;
+        }
+    };
+
     return {
         decapitalize: function(s) {
             return decapitalize.call(s);
@@ -75,6 +83,7 @@ define([
         toCamel: toCamel,
         configFields: configFields,
         getCookie: getCookie,
-        fetchSession: fetchSession
+        fetchSession: fetchSession,
+        getId: getId,
     };
 });

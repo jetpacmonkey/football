@@ -106,12 +106,14 @@
                     </div>
                 </div>
             </div>
+            <!-- ko if: session().user === currentDrafterId() -->
             <footer class="player-actions">
                 <!-- ko if: 'B' in availableDraftTypes() -->
                     <button class="draft-player type-both" data-bind="
                         css: {
                             'already-drafted': !availableDraftTypes().B
-                        }">
+                        },
+                        click: draftPlayerHandler()">
                         Draft <!-- ko text: selectedPlayer().getName() --><!-- /ko -->
                     </button>
                 <!-- /ko -->
@@ -119,17 +121,20 @@
                     <button class="draft-player type-O" data-bind="
                         css: {
                             'already-drafted': !availableDraftTypes().O
-                        }">
+                        },
+                        click: draftPlayerHandler('O')">
                         Draft <!-- ko text: selectedPlayer().getName() --><!-- /ko --> (offense)
                     </button>
                     <button class="draft-player type-D" data-bind="
                         css: {
                             'already-drafted': !availableDraftTypes().D
-                        }">
+                        },
+                        click: draftPlayerHandler('D')">
                         Draft <!-- ko text: selectedPlayer().getName() --><!-- /ko --> (defense)
                     </button>
                 <!-- /ko -->
             </footer>
+            <!-- /ko -->
             <!-- /ko -->
         </div>
     </div>

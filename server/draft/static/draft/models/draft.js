@@ -52,6 +52,21 @@ define([
                     'url': urlBase() + 'info/'
                 });
             };
+
+            self.draftPlayer = function(player, type) {
+                var data = {
+                    'player': util.getId(player),
+                };
+                if (type) {
+                    data.type = type;
+                }
+
+                return self.ajax({
+                    'url': urlBase() + 'draft_player/',
+                    'type': 'POST',
+                    'data': JSON.stringify(data)
+                });
+            };
         }
 
         Draft.info = {

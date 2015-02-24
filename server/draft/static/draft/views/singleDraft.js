@@ -193,6 +193,15 @@ define([
                 self.selectedPlayer(player);
             };
 
+            self.draftPlayerHandler = function(type) {
+                return function() {
+                    self.draft.draftPlayer(self.selectedPlayer(), type)
+                        .done(function() {
+                            self.pollDraftInfo();
+                        });
+                };
+            };
+
             $(function() {
                 self.init();
             });
