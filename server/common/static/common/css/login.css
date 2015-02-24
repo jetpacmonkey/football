@@ -4,15 +4,19 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center right;
+}
+
+#content {
     text-align: center;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 @supports(display: flex) {
-    body {
+    #content {
         text-align: left;
     }
 }
