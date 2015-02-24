@@ -81,7 +81,7 @@ class Draft(Base):
         all = Player.objects.all()
         if self.type in (self.PLAYER_TYPE_1WAY, self.PLAYER_TYPE_2WAY):
             all = all.exclude(id__in=self.draftees.all())
-        elif self.type == PLAYER_TYPE_CLONE:
+        elif self.type == self.PLAYER_TYPE_CLONE:
             draftee_objects = Draftee.objects.filter(draft=self)
             if type:
                 all = all.exclude(
@@ -100,13 +100,15 @@ class Draft(Base):
         if numDrafters == 0:
             return None
 
+        drafter_objects = Drafter.objects.filter(draft=self)
+
         curPos = self.numDrafted % numDrafters
-        curRound = self.numDrafted // numDrafters
+        curRound = (self.numDrafted + 1) // numDrafters
         if curRound % 2:
             # odd round (0-indexed), reverse order
-            return self.drafters.reverse()[curPos]
+            return drafter_objects.reverse()[curPos].user
         else:
-            return self.drafters.all()[curPos]
+            return drafter_objects[curPos].user
 
     def draftPlayer(self, player, type=None):
         if not self.getAvailablePlayers(type).filter(id=player.id).exists():
