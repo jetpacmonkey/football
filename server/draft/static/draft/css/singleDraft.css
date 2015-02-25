@@ -327,7 +327,20 @@
 .team-area {
     flex: 1;
     margin-top: 1px;
+
+    display: flex;
+    flex-direction: column;
 }
+
+.user-drafted-players {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    overflow: auto;
+    counter-reset: draftees;
+}
+
+
 
 .draftees {
     list-style: none;

@@ -93,7 +93,7 @@ class Draft(Base):
 
     def getDrafteeData(self):
         draftee_objects = Draftee.objects.filter(draft=self)
-        return [(d.player_id, d.type) for d in draftee_objects]
+        return [(d.player_id, d.type, d.user_id) for d in draftee_objects]
 
     def currentDrafter(self):
         numDrafters = self.drafters.count()

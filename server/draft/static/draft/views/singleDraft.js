@@ -76,7 +76,8 @@ define([
                 return _.map(self.info().draftees, function(drafteeData) {
                     return {
                         player: playerIndex[drafteeData[0]],
-                        type: drafteeData[1]
+                        type: drafteeData[1],
+                        user: drafteeData[2]
                     };
                 });
             });
@@ -104,6 +105,23 @@ define([
                         self.selectedPlayerId(val);
                     }
                 }
+            });
+
+            self.selectedUser = ko.computed({
+                read: function() {
+                    return self.indexes.users()[self.selectedUserId()];
+                },
+                write: function(val) {
+                    if (val instanceof User) {
+                        self.selectedUserId(val.getId());
+                    } else {
+                        self.selectedUserId(val);
+                    }
+                }
+            });
+
+            self.selectedUserPlayers = ko.computed(function() {
+                return _.filter(self.draftedPlayers(), {'user': self.selectedUserId()});
             });
 
             self.availableDraftTypes = ko.computed(function() {
@@ -199,6 +217,10 @@ define([
 
             self.clickPlayer = function(player) {
                 self.selectedPlayer(player);
+            };
+
+            self.clickUser = function(user) {
+                self.selectedUser(user);
             };
 
             self.draftPlayerHandler = function(type) {

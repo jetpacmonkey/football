@@ -18,7 +18,8 @@
                 self: $root.session().user === $data.getId(),
                 viewing: $root.selectedUserId() === $data.getId()
             },
-            text: getName()"></li>
+            text: getName(),
+            click: $root.clickUser"></li>
     </ul>
 </div>
 <div class="main ko-pending" data-bind="css: {'ko-pending': false}">
@@ -140,7 +141,21 @@
         </div>
     </div>
     <div class="team-area info-box">
-
+        <!-- ko if: selectedUser -->
+            <h2 class="col-header" data-bind="text: selectedUser().getName()"></h2>
+            <ul class="user-drafted-players" data-bind="foreach: selectedUserPlayers">
+                <li class="one-drafted-player" data-bind="
+                    click: function() {$root.clickPlayer(player)},
+                    css: {
+                        selected: $root.selectedPlayerId() === player.getId(),
+                        'type-O': type === 'O',
+                        'type-D': type === 'D'
+                    }
+                    ">
+                    <span class="drafted-player-name" data-bind="text: player.getName()"></span>
+                </li>
+            </ul>
+        <!-- /ko -->
     </div>
 </div>
 <div class="draftees-area col ko-pending" data-bind="css: {'ko-pending': false}">
