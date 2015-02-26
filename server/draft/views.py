@@ -17,8 +17,17 @@ def create(request):
     })
 
 
+def join(request):
+    return render(request, 'draft/join.html', {})
+
+
 def singleDraft(request, draftId):
     draft = get_object_or_404(Draft, id=draftId)
-    return render(request, 'draft/singleDraft.html', {
-        'draft': draft
-    })
+    if draft.state == Draft.STATE_PREDRAFT:
+        return render(request, 'draft/predraft.html', {
+            'draft': draft
+        })
+    elif draft.state == Draft.STATE_DRAFTING:
+        return render(request, 'draft/singleDraft.html', {
+            'draft': draft
+        })
