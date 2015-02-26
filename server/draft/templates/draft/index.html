@@ -11,15 +11,16 @@
     <ul class="primary">
         <li><a href="{% url 'draft.views.create' %}">Create</a></li>
         <li><a href="{% url 'draft.views.join' %}">Join Draft</a></li>
-        <li><label for="show-my-drafts">My Drafts</label></li>
     </ul>
-    <input type="checkbox" id="show-my-drafts" class="offscreen">
-    {% spaceless %}
-    <ul class="my-drafts">
-        {% for d in user_drafts %}
-        <li><a href="{% url 'draft.views.singleDraft' d.id %}">{{ d.name }}</a></li>
-        {% endfor %}
-    </ul>
-    {% endspaceless %}
+    <div class="my-drafts-area">
+        <h2 class="col-header">My Drafts</h2>
+        {% spaceless %}
+        <ul class="my-drafts">
+            {% for d in user_drafts %}
+            <li><a href="{% url 'draft.views.singleDraft' d.id %}">{{ d.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endspaceless %}
+    </div>
 </nav>
 {% endblock %}
