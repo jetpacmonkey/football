@@ -19,8 +19,8 @@ class Player(Base):
 
     # offensive_special = models.ManyToManyField(SpecialAbility, limit_choices_to={'type': 'offense'})
 
-    pass_man = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(3)], help_text="0-3")
-    pass_zone = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(5)], help_text="0-5")
+    pass_man = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(5)], help_text="0-5")
+    pass_zone = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(3)], help_text="0-3")
     run_defense = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(5)], help_text="0-5")
     blitzing = models.PositiveSmallIntegerField(validators=[validators.MaxValueValidator(5)], help_text="0-5")
 
