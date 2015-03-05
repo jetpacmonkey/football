@@ -12,19 +12,22 @@
 <div class="info-box start-draft-area ko-pending" data-bind="css: {'ko-pending': false}">
     <button class="start-draft">Start Draft</button>
 </div>
-<ul class="info-box drafters ko-pending" data-bind="css: {'ko-pending': false}">
-    <!-- ko foreach: drafterUsers -->
-    <li class="one-drafter" data-bind="
-        text: getName()
-    "></li>
-    <!-- /ko -->
-    <li class="add-drafter" data-bind="if: isOwner">
+<div class="info-box drafters-area ko-pending" data-bind="css: {'ko-pending': false}">
+    <h2 class="col-header">Drafters</h2>
+    <ul class="drafters" data-bind="foreach: drafterUsers">
+        <li class="one-drafter" data-bind="
+            text: getName()
+        "></li>
+    </ul>
+    <!-- ko if: isOwner -->
+    <div class="add-drafter-area">
         <!-- ko if: addingDrafter -->
-
+            <select data-bind="options: users"></select>
         <!-- /ko -->
         <!-- ko ifnot: addingDrafter -->
-
+            <button class="add-drafter">Add Drafter</button>
         <!-- /ko -->
-    </li>
-</ul>
+    </div>
+    <!-- /ko -->
+</div>
 {% endblock %}
