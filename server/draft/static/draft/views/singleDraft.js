@@ -57,7 +57,7 @@ define([
 
             self.drafterUsers = ko.computed(function() {
                 var index = self.indexes.users();
-                self.drafterUsers = _.map(self.draft.getDrafters(), function(uid) {
+                return _.map(self.draft.getDrafters(), function(uid) {
                     return index[uid] || uid;
                 });
             });

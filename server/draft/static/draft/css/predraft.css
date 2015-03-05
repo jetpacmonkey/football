@@ -1,0 +1,56 @@
+#content {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+
+    display: flex;
+    height: auto;
+    justify-content: center;
+}
+
+.start-draft-area {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-draft {
+    font-size: 1.4em;
+    line-height: 2em;
+    padding: 20px 40px;
+
+    cursor: pointer;
+    color: white;
+
+    background: rgba(40, 40, 140, 0.6);
+
+    border: none;
+}
+
+.start-draft:hover {
+    background: rgba(40, 40, 140, 0.8);
+}
+
+.start-draft:focus {
+    outline: none;
+    text-shadow: 0 0 4px rgba(140, 140, 40, 0.6);
+}
+
+.start-draft:active {
+    box-shadow: inset 0 0 10px #666;
+}
+
+.drafters {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.one-drafter {
+    margin: 0;
+    padding: 10px;
+}

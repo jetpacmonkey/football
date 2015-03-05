@@ -66,6 +66,14 @@ class Draft(Base):
     def __unicode__(self):
         return "{name} ({num} players drafted)".format(name=self.name, num=self.numDrafted)
 
+    def info(self):
+        drafter = self.currentDrafter()
+        return {
+            "draftees": self.getDrafteeData(),
+            "currentDrafter": drafter.id if drafter else None,
+            "state": self.state,
+        }
+
     def addDrafter(self, user):
         drafter = Drafter()
         drafter.draft = self

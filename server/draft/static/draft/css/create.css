@@ -73,6 +73,7 @@
 
 .settings-area > .actions-area > .button:focus {
     outline: none;
+    text-shadow: 0 0 4px rgba(140, 140, 40, 0.6);
 }
 
 .settings-area > .actions-area > .button:active {

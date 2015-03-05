@@ -1,16 +1,89 @@
 define([
         'jquery',
         'lodash',
-        'knockout'
+        'knockout',
+        'common/js/util',
+        'draft/models/draft',
+        'common/models/user'
     ], function(
         $,
         _,
-        ko
+        ko,
+        util,
+        Draft,
+        User
     ) {
-        function PredraftView() {
+        var DRAFT_POLL_PERIOD = 20000; //20 seconds
 
+        function PredraftView() {
+            var self = this,
+                splitLocation = window.location.pathname.split('/'),
+                draftId = +splitLocation[splitLocation.length - 1];
+
+            self.session = ko.observable({});
+            self.draft = new Draft();
+            self.users = ko.observableArray();
+
+            self.isOwner = ko.computed(function() {
+                return self.session().user === self.draft.getOwner();
+            });
+
+            self.addingDrafter = ko.observable(false);
+
+            self.indexes = {
+                users: ko.computed(function() {
+                    return _.indexBy(self.users(), function(u) {
+                        return u.getId();
+                    });
+                })
+            };
+
+            self.drafterUsers = ko.computed(function() {
+                var index = self.indexes.users();
+                return _.map(self.draft.getDrafters(), function(uid) {
+                    return index[uid] || uid;
+                });
+            });
+
+            self.draftInfoTimeout = null;
+
+            self.init = function() {
+                return $.when(
+                    self.fetchSession(),
+                    self.fetchDraft(),
+                    self.fetchUsers()
+                )
+                    .done(function() {
+                        ko.applyBindings(self);
+                    });
+            };
+
+            self.fetchSession = function() {
+                return util.fetchSession()
+                    .done(function(session) {
+                        self.session(session);
+                    });
+            };
+
+            self.fetchDraft = function() {
+                return self.draft.fetch(draftId)
+                    .done(function() {
+                        //self.pollDraftInfo();
+                    });
+            };
+
+            self.fetchUsers = function() {
+                return (new User()).getList()
+                    .done(function(users) {
+                        self.users(users);
+                    });
+            };
+
+            $(function() {
+                self.init();
+            });
         }
 
-        return new PredraftView();
+        return window.pdv = new PredraftView();
     }
 );
