@@ -69,28 +69,107 @@
     padding: 10px;
 }
 
-.add-drafter {
+.add-drafter-area {
+    position: relative;
     height: 30px;
+    overflow: hidden;
+}
+
+.open-add-drafter,
+.adding-drafter-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: .4s;
+}
+
+.open-add-drafter {
     line-height: 30px;
     text-align: center;
     margin: 0;
     padding: 0;
     border: 0;
-    width: 100%;
     color: white;
     background: rgba(40, 140, 40, 0.6);
     cursor: pointer;
 }
 
-.add-drafter:hover {
+.adding-drafter .open-add-drafter {
+    transform: translateX(-100%);
+}
+
+.open-add-drafter:hover {
     background: rgba(40, 140, 40, 0.8);
 }
 
-.add-drafter:focus {
+.open-add-drafter:focus {
     outline: none;
     text-shadow: 0 0 4px rgba(140, 140, 40, 0.6);
 }
 
-.add-drafter:active {
+.open-add-drafter:active {
     box-shadow: inset 0 0 10px #666;
+}
+
+.adding-drafter-area {
+    transform: translateX(100%);
+
+    display: flex;
+    align-items: stretch;
+}
+
+.adding-drafter .adding-drafter-area {
+    transform: none;
+}
+
+.adding-drafter-area .button {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+.adding-drafter-area .button.disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+.adding-drafter-area .button:focus {
+    outline: none;
+    text-shadow: 0 0 4px rgba(140, 140, 40, 0.6);
+}
+
+.adding-drafter-area .cancel-add-drafter {
+    order: 1;
+    background: rgba(140, 40, 40, 0.6);
+}
+
+.adding-drafter-area .cancel-add-drafter:not(.disabled):hover {
+    background: rgba(140, 40, 40, 0.8);
+}
+
+.adding-drafter-area .add-drafter-select {
+    order: 2;
+    flex: 1;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    padding: 0 6px;
+    margin: 0 1px;
+    background: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
+
+.adding-drafter-area .confirm-add-drafter {
+    order: 3;
+    background: rgba(40, 140, 40, 0.6);
+}
+
+.adding-drafter-area .confirm-add-drafter:not(.disabled):hover {
+    background: rgba(40, 140, 40, 0.8);
 }

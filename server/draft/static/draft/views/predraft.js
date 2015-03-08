@@ -29,6 +29,7 @@ define([
             });
 
             self.addingDrafter = ko.observable(false);
+            self.drafterToAdd = ko.observable(null);
 
             self.indexes = {
                 users: ko.computed(function() {
@@ -43,6 +44,21 @@ define([
                 return _.map(self.draft.getDrafters(), function(uid) {
                     return index[uid] || uid;
                 });
+            });
+
+            self.unusedUsers = ko.computed(function() {
+                var index = self.indexes.users();
+                return _.map(
+                    _.difference(
+                        _.map(self.users, function(u) {
+                            return u.getId();
+                        }),
+                        self.draft.getDrafters()
+                    ),
+                    function(uid) {
+                        return index[uid] || uid;
+                    }
+                );
             });
 
             self.draftInfoTimeout = null;
@@ -77,6 +93,23 @@ define([
                     .done(function(users) {
                         self.users(users);
                     });
+            };
+
+            //event handlers
+            self.openAddDrafter = function() {
+                self.addingDrafter(true);
+            };
+
+            self.cancelAddDrafter = function() {
+                self.addingDrafter(false);
+                self.drafterToAdd(null);
+            };
+
+            self.confirmAddDrafter = function() {
+                if (!self.drafterToAdd()) {
+                    return;
+                }
+
             };
 
             $(function() {

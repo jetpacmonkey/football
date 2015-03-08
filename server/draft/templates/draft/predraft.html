@@ -20,13 +20,20 @@
         "></li>
     </ul>
     <!-- ko if: isOwner -->
-    <div class="add-drafter-area">
-        <!-- ko if: addingDrafter -->
-            <select data-bind="options: users"></select>
-        <!-- /ko -->
-        <!-- ko ifnot: addingDrafter -->
-            <button class="add-drafter">Add Drafter</button>
-        <!-- /ko -->
+    <div class="add-drafter-area" data-bind="css: {'adding-drafter': addingDrafter}">
+        <div class="adding-drafter-area">
+            <select class="add-drafter-select" data-bind="options: unusedUsers,
+                optionsCaption: 'Select a user...',
+                optionsText: function(user) {return user.getName();},
+                value: drafterToAdd
+                "></select>
+            <button class="cancel-add-drafter button" data-bind="click: cancelAddDrafter">&#x2190;</button>
+            <button class="confirm-add-drafter button" data-bind="
+                css: {disabled: drafterToAdd() == null},
+                click: confirmAddDrafter
+                ">&#x2713;</button>
+        </div>
+        <button class="open-add-drafter" data-bind="click: openAddDrafter">Add Drafter</button>
     </div>
     <!-- /ko -->
 </div>
