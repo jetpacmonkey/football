@@ -38,6 +38,16 @@ class DraftViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    @detail_route(
+        methods=('POST',),
+        permission_classes=(api_permissions.IsDraftOwner, api_permissions.IsPredraft)
+        )
+    def start(self, request, pk):
+        draft = self.get_object()
+        draft.state = Draft.STATE_DRAFTING
+        draft.save()
+        return self.retrieve(request, pk)
+
     @detail_route(methods=('POST',), permission_classes=(api_permissions.CanDraft,))
     def draft_player(self, request, pk):
         draft = self.get_object()

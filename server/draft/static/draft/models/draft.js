@@ -25,6 +25,9 @@ define([
             };
 
             self.addDrafter = function(drafterId) {
+                if (drafterId.getId) {
+                    drafterId = drafterId.getId();
+                }
                 return self.ajax({
                     'url': urlBase() + 'add_drafter/',
                     'type': 'POST',

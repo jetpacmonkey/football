@@ -50,7 +50,7 @@ define([
                 var index = self.indexes.users();
                 return _.map(
                     _.difference(
-                        _.map(self.users, function(u) {
+                        _.map(self.users(), function(u) {
                             return u.getId();
                         }),
                         self.draft.getDrafters()
@@ -110,6 +110,10 @@ define([
                     return;
                 }
 
+                self.draft.addDrafter(self.drafterToAdd())
+                    .done(function() {
+                        self.cancelAddDrafter();
+                    });
             };
 
             $(function() {
