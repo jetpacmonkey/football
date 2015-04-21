@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="info-box start-draft-area ko-pending" data-bind="css: {'ko-pending': false}">
-    <button class="start-draft">Start Draft</button>
+<div class="info-box start-draft-area ko-pending" data-bind="css: {'ko-pending': false}, if: isOwner">
+    <button class="start-draft" data-bind="click: startDraft">Start Draft</button>
 </div>
 <div class="info-box drafters-area ko-pending" data-bind="css: {'ko-pending': false}">
     <h2 class="col-header">Drafters</h2>

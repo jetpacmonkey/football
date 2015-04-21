@@ -40,12 +40,13 @@ class DraftViewSet(viewsets.ModelViewSet):
 
     @detail_route(
         methods=('POST',),
-        permission_classes=(api_permissions.IsDraftOwner, api_permissions.IsPredraft)
+        permission_classes=(api_permissions.IsDraftOwner,)
         )
     def start(self, request, pk):
         draft = self.get_object()
-        draft.state = Draft.STATE_DRAFTING
-        draft.save()
+        if draft.state == Draft.STATE_PREDRAFT:
+            draft.state = Draft.STATE_DRAFTING
+            draft.save()
         return self.retrieve(request, pk)
 
     @detail_route(methods=('POST',), permission_classes=(api_permissions.CanDraft,))

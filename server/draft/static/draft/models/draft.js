@@ -41,6 +41,14 @@ define([
                     });
             };
 
+            self.start = function() {
+                return self.ajax({
+                    'url': urlBase() + 'start/',
+                    'type': 'POST',
+                    'data': '{}'
+                });
+            };
+
             self.getAvailablePlayers = function() {
                 return self.ajax({
                     'url': urlBase() + 'available_players/'

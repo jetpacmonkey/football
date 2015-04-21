@@ -116,6 +116,13 @@ define([
                     });
             };
 
+            self.startDraft = function() {
+                self.draft.start()
+                    .done(function() {
+                        window.location.reload();
+                    });
+            };
+
             $(function() {
                 self.init();
             });
